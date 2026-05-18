@@ -1,5 +1,45 @@
 # Changelog
 
+## skill v3.2.0 (2026-05-18): study-guide-site template option
+
+Added a third output mode to the skill: **multi-page browseable study-guide site with pedagogy appendix**. Documented in new reference `references/study-guide-site.md` (~17 KB). Joins the existing long-form PDF mode and landscape one-pager mode.
+
+**What's in the template.**
+
+- Output structure: corpus markdown, multi-page HTML site, Anki deck.
+- Pedagogy appendix template (6 subsections D.1-D.6): evidence summary with T1-verified citations, memory palace walkthrough (N rooms for N domains, ~2 items/locus capacity ceiling from Ondrej et al. 2025), domain-by-domain mnemonic quick reference, daily integration schedule, honest caveats (mocks beat the palace, transfer-appropriate processing, sleep matters), tier-tagged sources.
+- Inline memory-anchor blockquote pattern at the top of each Part.
+- Generator and Anki integration with exclusion-list pattern for user's known terms.
+- Locus-pattern table (multi-shelf pantry / four-cushion couch / stove burners / spice rack / mirror reflection / sponges in a row) mapping spatial patterns to content shapes.
+- Failure modes specific to study-guide sites (citation laundering on pedagogy claims, unfamiliar-space palace, >2 items/locus, mnemonics for unordered material, em-dashes, missing the mocks-beat-the-palace caveat).
+
+**Citations (T1-verified, body-read).**
+
+- Ondrej J. et al. (2025). The method of loci in the context of psychological research: A systematic review and meta-analysis. British Journal of Psychology. PMC12514325. Effect sizes d=0.42-0.88; GRADE very low to low.
+- Serra M.J. et al. (2025). The Use of Retrieval Practice in the Health Professions: A State-of-the-Art Review. PMC12292765. Two decades of retrieval-practice replication confirmed.
+
+**Worked example.** `/Users/wjia/Projects/cc-prep/study_guide/` (ISC2 CC certification cram, 10 weekdays, 16 HTML pages, full Appendix D, Anki deck with 107 cards). Builds 2026-05-17 with pedagogy appendix added 2026-05-18.
+
+**Trigger expansion.** Added to skill `description:`: "build me a study guide", "exam prep program", "cram program", "certification site", "curriculum site", "weekday cadence", "study program for N days", "memory palace for [exam]", "pedagogy appendix", "spaced repetition program". Mirror-synced to `~/.claude/skills/palamedes/` and `.cursor/rules/palamedes.mdc`.
+
+**Reference cross-links.** `references/output-rendering.md` updated to point at the new file for exam-prep variants. `references/study-guide-site.md` cross-references `source-grading.md`, `llm-failure-modes.md`, `output-rendering.md`, `landscape-summary-report.md`.
+
+**Motivation.** Wei's CC-prep work (2026-05-17 to 2026-05-18) developed a complete pedagogy pattern that generalized beyond the ISC2 CC subject matter: 5-room palace mapping, 6-section appendix structure, inline memory-anchor blockquotes, daily integration schedule overlay, T1-verified citation backbone. Incorporating it into palamedes makes the pattern reusable for any future exam-prep / certification / cram / curriculum deliverable. Triggered by user's "incorporate this into the study guide output for palamedes" 2026-05-18.
+
+---
+
+## skill v3.1.0 (2026-05-17): expanded synthesis-task triggers
+
+Added trigger phrases to the skill `description:` field to catch synthesis tasks that previously slipped past the load criteria: "study guide, exam prep, flashcards from sources, anki from sources, build curriculum, summarize papers, extract from documentation, synthesize external sources." Also added "synthesis" to the loop description.
+
+**Motivation.** A 4-pass audit on `qa-prep` (Wei's QA exam-prep deliverables) found that the skill's `read:body` iron-law floor never fired because the user phrased the task as "create anki cards / find resources / fully read parse" — synthesis-task phrasings that did not match any of the skill's trigger keywords. The skill was loaded by the user invoking it explicitly several passes later. Trigger expansion closes the routing gap so future synthesis tasks load the skill automatically.
+
+**Mirror sync.** `~/.claude/skills/palamedes/SKILL.md`, `<workspace>/.claude/skills/palamedes/SKILL.md`, and `<workspace>/.cursor/rules/palamedes.mdc` all refreshed.
+
+**Deployment mirror cleanup (same session).** The legacy `ai-research` deployment mirrors at `~/.claude/skills/ai-research/`, `<workspace>/.claude/skills/ai-research/`, and `<workspace>/.cursor/rules/ai-research.mdc` were removed; replaced by `palamedes` mirrors. The standalone `weijia-89/ai-research` local repo was already gone. Backups at `/tmp/ai-research*pre-rename-2026-05-17*`.
+
+---
+
 ## v5.0.0 (2026-05-16): renamed to `palamedes`; merged with `ai-research`
 
 **Renamed** `research-synthesis-prompt` → `palamedes`. Greek mythology: Palamedes was the inventor of measurement, the one who exposed Odysseus's feigned madness, and was framed and stoned to death in revenge. Patron of "the clever one who catches the deceiver and loses anyway." Apt for a tool whose job is catching where an LLM is bluffing.
