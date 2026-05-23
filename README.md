@@ -1,15 +1,18 @@
 # palamedes
 
-Rigorous LLM research, in two layers.
+Rigorous LLM research — prompts, agent skill, and a local browser UI in one repo.
 
 In Greek myth, Palamedes was the inventor of measurement and the one who exposed Odysseus's feigned madness. Odysseus framed him and had him stoned to death in revenge. Patron saint of "the clever one who catches the deceiver and loses anyway." The repo is named for him because the work has that shape: catching where a model is bluffing, anchoring claims to source text, refusing to let agreement between agents count as evidence when the agents share priors.
 
-This repo merges two previous projects:
+This repo merges two earlier projects and adds a third surface:
 
-- **`research-synthesis-prompt`** (May 7 to 15, 2026): a multi-agent dialectic synthesis prompt iterated across four major versions, each adversarially reviewed. Lives at [`prompts/`](./prompts/).
-- **`ai-research`** (May 14 to 16, 2026): an agent-loadable skill that gives an LLM coding agent the same epistemic discipline at the *coding-task* level rather than the *research-report* level. Lives at [`skill/`](./skill/).
+| Surface | Path | Role |
+| --- | --- | --- |
+| **Multi-agent prompts** | [`prompts/`](./prompts/) | Human-driven deep research: parallel agents + adversarial synthesis ([`research-synthesis-prompt`](https://github.com/weijia-89/research-synthesis-prompt), archived 2026-05-16) |
+| **Agent skill** | [`skill/`](./skill/) | Loadable discipline for Claude / Cursor / Windsurf on every "research" / "investigate" / "fact-check" task ([`ai-research`](https://github.com/weijia-89/ai-research), archived 2026-05-16) |
+| **Browser UI** | [`ui/`](./ui/) | Single-model convenience layer: stakes L0–L4, skill-aligned templates, local API key, short answer + report download |
 
-Both share the same core methodology (process-based evaluation, verbatim source quoting, hierarchy of evidence, dialectic adversarial review, recognition that consensus across similar models is not independence). The two surfaces are different lift points.
+All three share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
 
 ---
 
@@ -19,7 +22,8 @@ Both share the same core methodology (process-based evaluation, verbatim source 
 |---|---|
 | A human running a one-off deep-research workflow across multiple LLMs | [`prompts/research-synthesis.md`](./prompts/research-synthesis.md) then [`prompts/adversarial-review.md`](./prompts/adversarial-review.md) |
 | Using Claude / Cursor / Windsurf and want the agent to do research the rigorous way whenever it is asked to "research" or "investigate" or "fact-check" | [`skill/SKILL.md`](./skill/SKILL.md) loaded as a skill or rule |
-| Both | Both. They compose. |
+| You want a fast local run in the browser (one model, your API key, downloadable report) | [`ui/`](./ui/) — `./scripts/serve-ui.sh` → http://127.0.0.1:8765/ |
+| Maximum rigor on a hard question | Prompts + skill + (optional) UI for a first pass; full multi-agent + adversarial pass for ship decisions |
 
 ---
 
@@ -99,9 +103,21 @@ rsync -a skill/ ~/.claude/skills/palamedes/
 
 ---
 
-## Why combine them
+## The browser UI (`ui/`)
 
-They were doing the same epistemics at two different scales. The prompt was for one-shot human-driven deep research; the skill was for the same discipline applied continuously to coding-agent tasks. Keeping them in separate repos invited drift: a fix to the meta-evaluation calibration in the prompt did not propagate to the skill, and vice versa. The merged repo has one canonical evidence tier table, one canonical confidence-calibration doc, one canonical failure-log, and the two surfaces (prompt and skill) reference the same underlying methodology.
+Static app (HTML + JS, no build step). You choose research field, stakes (L0–L4), and output template; the UI loads [`ui/prompts/research-system.md`](./ui/prompts/research-system.md) and calls your OpenAI-compatible endpoint. Keys live in `localStorage` on your machine only.
+
+```bash
+./scripts/serve-ui.sh
+```
+
+See [`ui/README.md`](./ui/README.md) for features and security notes. For dialectic multi-agent runs and live retrieval, use the prompts and/or skill; the UI is a single-model front door, not the full agent.
+
+---
+
+## Why one repo
+
+The prompt, skill, and UI were drifting when split across repos. One canonical evidence tier table, confidence-calibration doc, failure-log, and template vocabulary keeps fixes in sync. The browser UI shipped first in [`cursor-sdk-playground`](https://github.com/weijia-89/cursor-sdk-playground) during SDK weekend work; **canonical home for the UI is this repo** (`ui/`).
 
 ---
 

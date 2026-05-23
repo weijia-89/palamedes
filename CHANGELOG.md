@@ -1,5 +1,71 @@
 # Changelog
 
+## browser UI v1.0.0 (2026-05-23): `ui/` — local research front end
+
+Added the Palamedes browser UI to this repo (canonical home; previously prototyped under `cursor-sdk-playground/palamedes-ui`).
+
+- **`ui/`** — static research app: L0–L4 stakes, question-type field, templates (full report, landscape one-pager, executive brief, study-guide-site outline), token/cost heuristic, refinement chips, markdown downloads.
+- **`ui/prompts/research-system.md`** — runtime prompt bundle loaded by the app.
+- **`scripts/serve-ui.sh`** — `python3 -m http.server` on `127.0.0.1:8765`.
+- Footer links to [github.com/weijia-89/palamedes](https://github.com/weijia-89/palamedes) only (no local path or external queue references).
+- **README** reframed: Palamedes is prompts + skill + browser UI, not prompts-only.
+
+**Not in this release:** multi-agent orchestration, live retrieval, or server-side key storage — use [`prompts/`](./prompts/) and [`skill/SKILL.md`](./skill/SKILL.md) for that.
+
+---
+
+## skill v3.6.0 (2026-05-18): §5j scientific-credibility filter (citation-laundering guard) + §5c source-tier table reorganization
+
+Codified §5j to close a pre-audit failure surfaced by Wei during the babytime sunscreen + skincare v1+v2+v2.1 review: EWG Sunscreen Guide had been tagged T1 (independent) and Mamavation XRF had been tagged T1 (independent testing) under §5c as it stood through v3.5.0, when both sources fail at least two of four scientific-credibility tests. Wei flagged the EWG placement: "EWG is a fake alarmist company that over-alerts on not scientifically credible ppms in products. why did this pop up as a source? palamedes should've caught and excluded quack sources."
+
+**What's in the rule.**
+
+- The failure mode named: **citation-laundering**. A source with documented methodology + heavy mainstream-citation count accumulates apparent credibility through citation frequency, but neither reproducibility-of-scoring nor mainstream-citation-count tests verify that the interpretive methodology is toxicologically and clinically credible.
+- Four-tests scientific-credibility scan, applied to any source proposing hazard scores / safety ratings / curated product lists at consumer-product granularity:
+  1. **Toxicological-threshold anchoring** — alignment with peer-reviewed regulatory reference doses (NOAEL / RfD / ADI / TDI from EPA, EFSA, JECFA, FDA, Health Canada). Aspirational thresholds below the regulatory threshold without per-ingredient toxicological justification = fail.
+  2. **Clinical-consensus alignment** — alignment with the relevant clinical professional society's position (AAP, AAD, NEA, ACOG, AAFP). Ratings that would discourage use of products the clinical-T1 society explicitly recommends = fail.
+  3. **Peer-reviewed critique scan** — search PubMed / Cochrane / clinical-professional-society journal for methodology critique. ≥2 independent critiques flagging as scientifically unsound = fail.
+  4. **Funding-base COI scan** — funding base includes industry actors whose products score systematically well under the methodology = structural COI flag.
+- Named failure exemplars demoted to **T2-FLAGGED (data-useful, framing-FLAG)**: EWG (Skin Deep + Sunscreen Guide + Dirty Dozen + Top-Rated lists; fails tests 1, 2, 3; peer-reviewed critique includes Carroll + Maldonado in *Pediatrics* 2019, Annals of Internal Medicine Dirty Dozen critique, Academy of Nutrition and Dietetics rejection, USDA Pesticide Data Program public dispute, AAD declination to endorse), Mamavation (XRF investigations + "Made Safe" labels; fails tests 1, 2 partial), "Gimme the Good Stuff" / "Green Choice Lifestyle" / "Lucie's List" lifestyle blogs (already T3 per §5c; §5j adds second flag).
+- Use raw data only; ignore interpretive framings. EWG per-product database lookup for ingredient identification = data-useful. EWG 1-10 hazard scores, EWG Top-Rated lists, EWG 7-10 hard-disqualification triggers = do not use. Mamavation raw XRF ppm detection data re-anchored to FDA / EPA / EU regulatory limits = data-useful. Mamavation "lead-positive" / "PFAS-positive" / "Made Safe" labels = do not use.
+- Picks framework implication: a pick anchored on a §5j-flagged source's framing alone is not picks-eligible. Pick must anchor on at least one credible source (T1 regulatory, T1 clinical, T1 peer-reviewed pharmacology / toxicology, or T1 independent testing per the four-tests pass).
+- Hard-disqualification implication: "EWG hazard rating 7-10" or "Mamavation lead-positive" alone are NOT valid hard-disqualification triggers. Valid triggers: named regulatory ban (Hawaii Act 104, EU Annex II, FDA recall, CPSC recall), clinical-society contraindication, peer-reviewed pharmacology finding, independent testing result above the peer-reviewed regulatory threshold.
+- Operational form: §5b pre-audit must include a scientific-credibility scan table (Source | Test 1 | Test 2 | Test 3 | Test 4 | Verdict) for every hazard-scoring source referenced in the report.
+
+**§5c table reorganization (companion edit).**
+
+- T1 (independent testing) criterion tightened to require alignment with toxicological reference doses (NOAEL / RfD / ADI from EPA / EFSA / JECFA).
+- Mamavation XRF and EWG Skin Deep / Sunscreen Guide explicitly removed from T1 (independent testing); ÖKO-TEST added as a legitimate T1 replacement (peer-reviewed methodology with stated detection limits).
+- New T2-FLAGGED row added: "Independent consumer-product investigators with documented but alarmist methodology" — Mamavation XRF + EWG Skin Deep + EWG Sunscreen Guide. Use raw data only; ignore interpretive framings.
+- Penalty/bonus framework: −−− (hard-disqualify) now requires alignment with FDA / EPA / EU regulatory threshold for the specific contaminant; the bar "Mamavation lead-positive" alone is no longer valid for hard disqualification.
+- T3 (flagged for affiliate format) row updated to include "Gimme the Good Stuff" explicitly.
+
+**Motivation.** §5g (evidence-of-evidence floor) catches the citation-verification dimension — did the source actually say what the cite claims it said. §5g does NOT catch the source-credibility dimension — is the source's interpretive methodology toxicologically and clinically credible. The 2026-05-18 sunscreen + skincare deliverables passed §5g but failed the citation-laundering test that §5j now codifies. §5j is the missing gate between §5g and the final picks.
+
+**Retroactive correction scope.** Babytime reports flagged for retrofit pass: sunscreen, skincare (active deliverable, corrected in same session as §5j codification), plus likely-affected: bath-toys, teething, feeding, formula, prenatal-early, prenatal-late, carriers, monitors, gates, activities, toys. Each report needs a §5j pass against its source list, with picks reframed onto credible anchors and hard-disqualifications re-examined. Dispatched as a separate retrofit wave.
+
+---
+
+## skill v3.5.0 (2026-05-18): §5i citation chip + marginalia markup coverage discipline
+
+Codified §5i as an iron-law authoring discipline for L2+ reports. **Every load-bearing factual claim in REPORT.md must carry a backticked tier-tag chip resolving to a `REFERENCES.md` entry, and every granular aside currently interrupting the running argument must demote to `^[...]` marginalia.** The chips and marginalia are what the render pipeline (currently `/Users/wjia/Projects/babytime/render/render.py`) promotes into the right gutter of the rendered PDF or HTML. Where the markdown is unmarked, the gutter stays empty and the design feature is dead weight.
+
+**What's in the rule.**
+
+- Markup syntax: backticked `` `[T1, ID]` `` / `` `[T2, ID]` `` / `` `[T3, ID]` `` with optional tier suffix (`-clinical`, `-forum`) for citation chips; `^[content]` for marginalia. ID resolves to `REFERENCES.md`; placement is end-of-paragraph for chips, immediately-after-sentence for marginalia.
+- Load-bearing test (gets a chip): references a regulatory standard, a regulator action (CPSC / FDA / NHTSA / EPA), a clinical study or guideline, an EU-T1 testing body finding (ADAC / Stiftung Warentest / ÖKO-TEST / TCS / IHDI), a brand-attribution verification, or a numerical fact tied to a source.
+- Marginalia test (gets demoted): granular subset breakdowns, source-verification details, methodology asides, date-of-access notes, attribution chains, mid-sentence parentheticals >~15 words. If a reader can skip the parenthetical and the sentence still carries the argument, it's marginalia.
+- Coverage floor: 200-line L2+ REPORT.md targets 20-30 chips minimum and 8-15 marginalia, scaled with density of factual claims. Decision Card, picks tables, hard disqualifications, source-tier-weighting section, and stakes section each chip per load-bearing claim. Chips only in Decision Card OR only in back half is partial compliance.
+- Missing REFERENCES.md ID → `NEEDS-CITATION-<slug>` placeholder, never fabrication.
+- Operational integration: extends §5h step 2 (`REPORT.md v1 drafted`). REPORT.md is not v1-complete without the §5i coverage floor met; grep-check before proceeding to step 3 (companion files).
+- Parallel-agent corollary: each wave-N category agent applies §5i to its own REPORT.md; integration agent (§5e) verifies coverage as part of cross-category audit.
+
+**Motivation.** 2026-05-18 wave-3 audit found 7 of 18 babytime categories (teething, bath-toys, prenatal-late, skincare, strollers, sunscreen, travel) had ZERO citation chips after the v3.1 retrofit + §5e + §5f + §5g + §5h discipline was applied to each. The §5h gate caught Wei-voice issues; the §5g gate caught hallucinated attributions; none of the existing gates caught the absent-typographic-markup pattern because every prior rule operated on prose content, not on the markup that the render pipeline relies on. Wei flagged the empty gutter in the teething PDF on 2026-05-18 21:04. Wave-3 marker-discipline retrofit dispatch infrastructure built same day at `/Users/wjia/Projects/babytime/localonly/handoff/parallel_dispatch_v3/`; §5i codified to prevent recurrence.
+
+**Worked example.** `/Users/wjia/Projects/babytime/carriers/REPORT.md` (the best-marked-up exemplar; 6 chips + 4 marginalia across 270 lines as of v1; mirrors the syntax + placement + coverage discipline §5i prescribes). Future agents building L2+ reports read this file alongside §5i to ground the discipline.
+
+---
+
 ## skill v3.2.0 (2026-05-18): study-guide-site template option
 
 Added a third output mode to the skill: **multi-page browseable study-guide site with pedagogy appendix**. Documented in new reference `references/study-guide-site.md` (~17 KB). Joins the existing long-form PDF mode and landscape one-pager mode.

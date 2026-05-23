@@ -54,11 +54,15 @@ The full palette in `style.css`:
 --indigo:       #3D4A5E;    /* muted indigo - cool counterpoint */
 ```
 
-### 3. Letter page size, generous body column
+### 3. Letter page size, body fills the page
 
-Page: Letter portrait, 1.8cm top, 1.6cm sides, 2.0cm bottom. Body `max-width: 44em` (~75 characters per line on a 9.5pt serif). Wider than a hardcover book; narrower than a webpage.
+Page: Letter portrait, 1.8cm top, 1.0cm sides, 2.0cm bottom. **Body column has no max-width**: it fills the full page-usable space (~63em at 8.75pt serif) and wraps naturally around right-floated citation blocks.
 
-Tables use full body width by default. Pull quotes and figures may use full width.
+Citations float right with `width: 24em` and `margin-left: 2em` (~2 character gap between body text and the citation block). Where a citation is present, body line length is constrained to ~37em next to it; where no citation, body extends the full ~63em.
+
+This shape was iterated three times on 2026-05-18: first widening from 36em → 38em with a 25em gutter, then doubling the citation width (12.5em → 24em), then removing the body max-width entirely so the main text reaches the right edge wherever no citation is floating. The final shape is "Tufte gutter only when a citation needs it; full bleed everywhere else".
+
+Tables use `width: 100%` of main and inherit the same full-page extent.
 
 ### 4. Smaller body type, generous line-height
 
@@ -70,7 +74,7 @@ Inline tier-tag citations like `[T1, CPSC-26-307]` render as small monospace chi
 
 ### 6. Margin notes for digressions
 
-The `aside.margin-note` element floats into the right gutter (Tufte-style). Use for citations, asides, definitions, parenthetical explanations that interrupt the body flow. Width: 11em, font 7.5pt sans, italic, sage left-border.
+The `aside.margin-note` element floats into the right gutter (Tufte-style). Use for citations, asides, definitions, parenthetical explanations that interrupt the body flow. Width: 24em, font 7pt sans, sage left-border. The `aside.citation` (moss border, expanded source metadata) and `aside.marginalia` (amber border, italic serif) variants share the same 24em block.
 
 Markdown invocation pattern:
 
