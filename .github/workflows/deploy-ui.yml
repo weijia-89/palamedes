@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "ui/**"
+      - "index.html"
+      - ".nojekyll"
       - ".github/workflows/deploy-ui.yml"
   workflow_dispatch:
 
@@ -15,7 +17,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
@@ -34,6 +36,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ui
+          include-hidden-files: true
 
       - name: Deploy to GitHub Pages
         id: deployment

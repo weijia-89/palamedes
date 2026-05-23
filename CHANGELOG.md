@@ -1,10 +1,9 @@
 # Changelog
 
-## browser UI v1.1.0 (2026-05-23): GitHub Pages at site root
+## browser UI v1.1.1 (2026-05-23): GitHub Pages homepage fix
 
-- **GitHub Pages:** [https://weijia-89.github.io/palamedes/](https://weijia-89.github.io/palamedes/) deploys `ui/` as the site root via GitHub Actions (`deploy-ui.yml`), replacing legacy Pages (repo root README as homepage, UI only at `/ui/`).
-- **`ui/.nojekyll`** — skip Jekyll so static paths and ES modules work.
-- **README** — live URL + local `./scripts/serve-ui.sh`.
+- **Root `.nojekyll` + `index.html`** — stop Jekyll from rendering README at `/` when legacy branch Pages still runs; root shell uses `<base href="ui/">` until Actions deploy replaces the site with `ui/` at artifact root.
+- **`deploy-ui.yml`** — `include-hidden-files: true`, `cancel-in-progress: true`, trigger on root Pages files.
 
 ---
 
