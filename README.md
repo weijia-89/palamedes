@@ -1,6 +1,6 @@
 # palamedes
 
-Rigorous LLM research — prompts, agent skill, and a browser UI in one repo.
+Rigorous LLM research with prompts, agent skill, and a browser UI in one repo.
 
 **Live UI:** [https://weijia-89.github.io/palamedes/](https://weijia-89.github.io/palamedes/) (GitHub Pages deploys [`ui/`](./ui/) on every push to `main`). Local dev: `./scripts/serve-ui.sh` → http://127.0.0.1:8765/
 
