@@ -1,10 +1,12 @@
 # Palamedes browser UI (`ui/`)
 
-Local single-model front end for Palamedes-style research: stakes ladder, output templates, token heuristic, short answer + downloadable report, refinement chips. API keys stay in the browser only.
+Single-model front end for Palamedes-style research: stakes ladder, output templates, token heuristic, short answer + downloadable report, refinement chips. API keys stay in the browser only.
+
+**Live:** [https://weijia-89.github.io/palamedes/](https://weijia-89.github.io/palamedes/) (deployed from this folder on push to `main`).
 
 This is **not** a replacement for the full multi-agent [`prompts/`](../prompts/) workflow or the agent [`skill/`](../skill/); it is the fastest way to run one bounded pass with the same template vocabulary.
 
-## Run
+## Run locally
 
 ```bash
 cd ~/Projects/palamedes

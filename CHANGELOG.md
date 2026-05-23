@@ -1,5 +1,13 @@
 # Changelog
 
+## browser UI v1.1.0 (2026-05-23): GitHub Pages at site root
+
+- **GitHub Pages:** [https://weijia-89.github.io/palamedes/](https://weijia-89.github.io/palamedes/) deploys `ui/` as the site root via GitHub Actions (`deploy-ui.yml`), replacing legacy Pages (repo root README as homepage, UI only at `/ui/`).
+- **`ui/.nojekyll`** — skip Jekyll so static paths and ES modules work.
+- **README** — live URL + local `./scripts/serve-ui.sh`.
+
+---
+
 ## browser UI v1.0.0 (2026-05-23): `ui/` — local research front end
 
 Added the Palamedes browser UI to this repo (canonical home; previously prototyped under `cursor-sdk-playground/palamedes-ui`).

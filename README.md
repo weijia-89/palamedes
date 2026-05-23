@@ -1,6 +1,8 @@
 # palamedes
 
-Rigorous LLM research — prompts, agent skill, and a local browser UI in one repo.
+Rigorous LLM research — prompts, agent skill, and a browser UI in one repo.
+
+**Live UI:** [https://weijia-89.github.io/palamedes/](https://weijia-89.github.io/palamedes/) (GitHub Pages deploys [`ui/`](./ui/) on every push to `main`). Local dev: `./scripts/serve-ui.sh` → http://127.0.0.1:8765/
 
 In Greek myth, Palamedes was the inventor of measurement and the one who exposed Odysseus's feigned madness. Odysseus framed him and had him stoned to death in revenge. Patron saint of "the clever one who catches the deceiver and loses anyway." The repo is named for him because the work has that shape: catching where a model is bluffing, anchoring claims to source text, refusing to let agreement between agents count as evidence when the agents share priors.
 
@@ -10,7 +12,7 @@ This repo merges two earlier projects and adds a third surface:
 | --- | --- | --- |
 | **Multi-agent prompts** | [`prompts/`](./prompts/) | Human-driven deep research: parallel agents + adversarial synthesis ([`research-synthesis-prompt`](https://github.com/weijia-89/research-synthesis-prompt), archived 2026-05-16) |
 | **Agent skill** | [`skill/`](./skill/) | Loadable discipline for Claude / Cursor / Windsurf on every "research" / "investigate" / "fact-check" task ([`ai-research`](https://github.com/weijia-89/ai-research), archived 2026-05-16) |
-| **Browser UI** | [`ui/`](./ui/) | Single-model convenience layer: stakes L0–L4, skill-aligned templates, local API key, short answer + report download |
+| **Browser UI** | [`ui/`](./ui/) · [live](https://weijia-89.github.io/palamedes/) | Single-model convenience layer: stakes L0–L4, skill-aligned templates, local API key, short answer + report download |
 
 All three share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
 
@@ -22,7 +24,7 @@ All three share one methodology (process-based evaluation, verbatim quoting, hie
 |---|---|
 | A human running a one-off deep-research workflow across multiple LLMs | [`prompts/research-synthesis.md`](./prompts/research-synthesis.md) then [`prompts/adversarial-review.md`](./prompts/adversarial-review.md) |
 | Using Claude / Cursor / Windsurf and want the agent to do research the rigorous way whenever it is asked to "research" or "investigate" or "fact-check" | [`skill/SKILL.md`](./skill/SKILL.md) loaded as a skill or rule |
-| You want a fast local run in the browser (one model, your API key, downloadable report) | [`ui/`](./ui/) — `./scripts/serve-ui.sh` → http://127.0.0.1:8765/ |
+| You want a fast run in the browser (one model, your API key, downloadable report) | [Live UI](https://weijia-89.github.io/palamedes/) or [`ui/`](./ui/) + `./scripts/serve-ui.sh` |
 | Maximum rigor on a hard question | Prompts + skill + (optional) UI for a first pass; full multi-agent + adversarial pass for ship decisions |
 
 ---
@@ -105,9 +107,10 @@ rsync -a skill/ ~/.claude/skills/palamedes/
 
 ## The browser UI (`ui/`)
 
-Static app (HTML + JS, no build step). You choose research field, stakes (L0–L4), and output template; the UI loads [`ui/prompts/research-system.md`](./ui/prompts/research-system.md) and calls your OpenAI-compatible endpoint. Keys live in `localStorage` on your machine only.
+Static app (HTML + JS, no build step). **Published at [https://weijia-89.github.io/palamedes/](https://weijia-89.github.io/palamedes/)** via [`.github/workflows/deploy-ui.yml`](./.github/workflows/deploy-ui.yml) (artifact = `ui/` at site root). You choose research field, stakes (L0–L4), and output template; the app loads [`ui/prompts/research-system.md`](./ui/prompts/research-system.md) and calls your OpenAI-compatible endpoint. Keys live in `localStorage` in your browser only.
 
 ```bash
+# Local dev (same files as Pages)
 ./scripts/serve-ui.sh
 ```
 
