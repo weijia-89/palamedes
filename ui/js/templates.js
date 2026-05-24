@@ -23,7 +23,8 @@ export const TEMPLATES = [
   {
     id: "study-guide-site",
     label: "Study guide site",
-    description: "Multi-day exam-prep corpus with pedagogy appendix outline.",
+    description:
+      "Multi-page browseable exam-prep outline: router + daily cadence, corpus Parts, pedagogy appendix (memory palace, spaced repetition).",
     outputTokens: 7500,
   },
 ];
