@@ -11,6 +11,8 @@ test -f ui/index.html
 
 PROMPT=ui/prompts/research-system.md
 grep -q 'Router page plan' "$PROMPT"
+grep -q 'Primary corpus' "$PROMPT"  # sdk-review F1: deck/glossary/Parts stub must not be trimmed silently
+grep -q 'Daily cadence table' "$PROMPT"  # sdk-review F1: per-day rows/cap must not be trimmed silently
 grep -q 'Pedagogy appendix' "$PROMPT"
 grep -q 'Inline memory anchors' "$PROMPT"
 grep -q 'Appendix B miss-pattern elicitation' "$PROMPT"
