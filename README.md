@@ -120,7 +120,7 @@ See [`ui/README.md`](./ui/README.md) for features and security notes. For dialec
 
 ## Why one repo
 
-The prompt, skill, and UI were drifting when split across repos. One canonical evidence tier table, confidence-calibration doc, failure-log, and template vocabulary keeps fixes in sync. The browser UI shipped first in [`cursor-sdk-playground`](https://github.com/weijia-89/cursor-sdk-playground) during SDK weekend work; **canonical home for the UI is this repo** (`ui/`).
+The prompt, skill, and UI were drifting when split across repos. One canonical evidence tier table, confidence-calibration doc, failure-log, and template vocabulary keeps fixes in sync. The browser UI was prototyped in [`cursor-sdk-playground`](https://github.com/weijia-89/cursor-sdk-playground) during the initial migration; **canonical home for the UI is this repo** (`ui/`), deployed at [weijia-89.github.io/palamedes](https://weijia-89.github.io/palamedes/) via [`.github/workflows/deploy-ui.yml`](./.github/workflows/deploy-ui.yml) (v1.1.1: root `.nojekyll` + `ui/` artifact at site root).
 
 ---
 
