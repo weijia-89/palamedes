@@ -49,6 +49,16 @@ cd ui && python3 -m http.server 8765 --bind 127.0.0.1
 2. Ask something like: *"Build a 10-weekday ISC2 CC cram program with daily pages, practice mocks, and a pedagogy appendix covering memory palace and spaced repetition."*
 3. Download the markdown outline from **Full report**; use it as the corpus spec for a downstream HTML render (see skill reference — not built in this UI).
 
+## Verify
+
+Merge gate and SDK orchestrator verify cmd (canonical):
+
+```bash
+bash scripts/verify-study-guide-ui.sh
+```
+
+Checks template wiring plus load-bearing `research-system.md` section keywords (router, pedagogy, elicitation guards). Do not substitute bare `grep study-guide` — that passes if contract bullets are trimmed.
+
 ## Canon
 
 Full rigor: [`skill/SKILL.md`](../skill/SKILL.md) · multi-agent synthesis: [`prompts/research-synthesis.md`](../prompts/research-synthesis.md)
