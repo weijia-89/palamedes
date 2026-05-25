@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
+- **Pages workflow verify** — `deploy-ui.yml` path triggers match repo tree (`ui/**`, root `index.html` / `.nojekyll`); live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` artifact; `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + verify commands.
 
 ## browser UI v1.1.1 (2026-05-23): GitHub Pages homepage fix
 
