@@ -2,17 +2,20 @@
 
 ## Cursor Cloud specific instructions
 
-This is a **documentation-only repository** — it contains no runnable application code, no services, no build system, and no automated test suite. The entire repository is Markdown files (LLM prompts, a coding-agent skill, and reference materials).
+This repo is primarily **Markdown** (LLM prompts, `skill/`, references) plus a **static browser UI** under `ui/` deployed to [GitHub Pages](https://weijia-89.github.io/palamedes/).
 
 ### Repository layout
 
 - `prompts/` — Multi-agent dialectic research synthesis prompts (paste into LLM UIs).
 - `skill/` — Agent-loadable skill file (`SKILL.md`) plus supporting reference docs in `skill/references/`.
 - `assets/` — Image assets referenced by `README.md`.
+- `ui/` — Static research app (HTML + JS, no build step); canonical UI home.
+- `scripts/serve-ui.sh` — Local dev server (`http://127.0.0.1:8765/`).
+- `scripts/verify-study-guide-ui.sh` — Merge gate for study-guide template + prompt contract stubs.
+- `scripts/verify-pages-workflow.sh` — Merge gate for Pages deploy workflow paths and `ui/` artifact layout.
+- `.github/workflows/deploy-ui.yml` — Pushes `ui/` to GitHub Pages on `main` when UI paths change.
 
-### Linting
-
-The only meaningful automated check is markdown linting:
+### Linting (Markdown)
 
 ```sh
 markdownlint '**/*.md' --ignore node_modules
@@ -20,12 +23,17 @@ markdownlint '**/*.md' --ignore node_modules
 
 Most warnings will be MD013 (line-length >80) which is expected for long-form prose. Focus on structural issues (MD041, MD022, etc.) rather than line-length.
 
-### No build / run / test
+### UI development workflow
 
-There is no `package.json`, `Makefile`, `Dockerfile`, or any dependency manifest. There are no services to start, no tests to run, and no application to build. The "product" is consumed by copy-pasting prompts into LLM chat interfaces or loading `skill/SKILL.md` as an agent skill.
+1. Edit files under `ui/` (and prompts/skill when templates change).
+2. Run merge gates before opening a PR that touches UI or Pages config:
 
-### Development workflow
+```sh
+./scripts/verify-study-guide-ui.sh
+./scripts/verify-pages-workflow.sh
+```
 
-1. Edit Markdown files.
-2. Run `markdownlint` to check for structural issues.
-3. Commit and push.
+3. Optional local smoke: `./scripts/serve-ui.sh`
+4. Commit and push; `main` deploys via Actions when path filters match.
+
+There is no `package.json` or application test suite for the static UI. The dialectic prompts and skill are consumed by copy-paste or agent load; the UI calls your OpenAI-compatible endpoint with keys in browser `localStorage` only.

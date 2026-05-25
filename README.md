@@ -114,8 +114,9 @@ Static app (HTML + JS, no build step). **Published at [https://weijia-89.github.
 ./scripts/serve-ui.sh
 # → http://127.0.0.1:8765/
 
-# Merge gate (study-guide template + prompt contract stubs)
-./scripts/verify-study-guide-ui.sh
+# Merge gates
+./scripts/verify-study-guide-ui.sh   # study-guide template + prompt contract stubs
+./scripts/verify-pages-workflow.sh   # deploy-ui.yml paths + ui/ artifact layout
 ```
 
 Templates include full report, landscape one-pager, executive brief, and **study guide site** (exam-prep outline — see [`ui/README.md`](./ui/README.md)). See [`ui/README.md`](./ui/README.md) for features and security notes. For dialectic multi-agent runs and live retrieval, use the prompts and/or skill; the UI is a single-model front door, not the full agent.

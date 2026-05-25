@@ -3,7 +3,9 @@
 ## [Unreleased]
 
 - **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
-- **Pages workflow verify** — `deploy-ui.yml` path triggers match repo tree (`ui/**`, root `index.html` / `.nojekyll`); live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` artifact; `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + verify commands.
+- **Pages workflow verify** — `./scripts/verify-pages-workflow.sh` encodes `deploy-ui.yml` path triggers and `ui/` artifact layout; live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` at site root.
+- **Study-guide merge gate** — `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + both verify commands.
+- **AGENTS.md** — documents `ui/`, serve/verify scripts, and Pages workflow for Cursor Cloud agents (sdk-review F1 P4).
 
 ## browser UI v1.1.1 (2026-05-23): GitHub Pages homepage fix
 
