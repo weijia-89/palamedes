@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+
+- **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
+
 ## browser UI v1.1.1 (2026-05-23): GitHub Pages homepage fix
 
 - **Root `.nojekyll` + `index.html`** — stop Jekyll from rendering README at `/` when legacy branch Pages still runs; root shell uses `<base href="ui/">` until Actions deploy replaces the site with `ui/` at artifact root.

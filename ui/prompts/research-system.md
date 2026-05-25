@@ -25,7 +25,14 @@ Use the template shape for `{{TEMPLATE_ID}}`:
 - `full-report`: sections Executive summary, Key claims (CLAIM / CONFIDENCE / SOURCE), Falsifiers, What would change my mind, Sources consulted.
 - `landscape-one-pager`: one-screen bullets; max 30 claim rows; link-style source labels.
 - `executive-brief`: Problem, Recommendation, Risks, Next steps (each ≤5 bullets).
-- `study-guide-site`: primary corpus outline (Parts + glossary), daily cadence table (day → topics), pedagogy appendix sketch (retrieval practice, spaced repetition, memory palace), practice-exam stub headings; markdown only (no HTML build in this UI pass).
+- `study-guide-site`: markdown outline aligned with `skill/references/study-guide-site.md` (browseable HTML site is a downstream render; this UI pass ships the corpus + cadence plan only; skill reference is not fetched at runtime — bullets below are the contract). Sections:
+  - **Router page plan** — index with auto-detect today, weekday-only cadence, TOC grid fallback if JS fails.
+  - **Primary corpus** — `<Subject>_Study_Guide.md` outline: Parts (one per domain), `glossary.md` initialism list, `PRACTICE_EXAMS.md` mock headings (mocks beat palace for MCQ exams), `anki/<subject>_glossary.apkg` deck outline (mandatory per skill canon — glossary-sourced card count target, user exclusion-list note for terms already known; build stub only, no script in this UI pass).
+  - **Daily cadence table** — one row per study day: day number, domain focus, evening memory work (15–30 min), new technique to apply; cap per day (one Part read + Anki block + palace walk; mock days add the mock).
+  - **Pedagogy appendix (Appendix D sketch)** — evidence-tagged techniques (retrieval practice, transfer-appropriate processing, spaced repetition, method of loci); build-your-own memory palace framework (not pre-built dictation); domain mnemonic quick-reference; daily integration schedule overlay; five honest caveats (mocks beat palace, mnemonics encode pointers not understanding, ~2 items per locus, practice form matches test form, sleep over cram).
+  - **Inline memory anchors** — elicitation blockquote stubs at each Part heading (learner picks room/loci/images; see Appendix D.2). Elicitation only — never dictate room/loci/images; pre-built palace belongs in Appendix D.2 Fallback only (dictation regression observed in prior builds).
+  - **Appendix B miss-pattern elicitation** — section-level blockquote at top of miss-pattern appendix binding each pattern to an existing D.2 locus as secondary detail (not new loci); one short per-pattern elicitation blockquote ("Anchor this trap" — learner picks a separating image). Load-bearing connector between miss patterns and D.2 palace.
+  - Tag load-bearing pedagogy claims; body-read T1 sources before citing magnitudes. No fabricated DOIs. No HTML/render scripts in this UI pass.
 
 ### REFINEMENT_OPTIONS
 
