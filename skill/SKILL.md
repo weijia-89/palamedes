@@ -231,9 +231,9 @@ Wei standing rule, codified 2026-05-17 (second iteration of §5a after the babyt
 
 **1. Higher-rigor international standards.** Every safety-stakes report must scan international standards from countries with materially higher rigor than the US (typically Canada / Health Canada, Germany / ADAC, Switzerland / TCS, EU / EN-series, AS/NZS). Identify which higher-bar standards exist, name them with their scope, and **apply them as a filter against the candidate pick set BEFORE listing the picks.** A pick that only passes the US floor but is rejected by a higher-bar regulator (e.g., a product flagged by ADAC for chemical-content failure) does not appear in the picks table, or appears with a flag-down marker. The international audit is the input to the picks, not a footnote after them.
 
-**2. Review-source pre-audit with AI-signal scan.** Every report cites third-party reviewers (Wirecutter, Consumer Reports, Lucie's List, niche blogs, etc.). **Before relying on a source, run the AI-signal scan from `/Users/wjia/Projects/deai/reference/ai-signals.md`** against the source's review text. AI-signal-heavy reviews (generic mic-drop framings, "perfect for parents who...", overused tricolons after colons, em-dashes, hedging-without-evidence) are **discarded entirely, not weighted lower.** The source-eligibility verdict (KEEP / DISCARD) appears in REPORT.md before the picks. Picks rely only on KEEP sources.
+**2. Review-source pre-audit with AI-signal scan.** Every report cites third-party reviewers (Wirecutter, Consumer Reports, Lucie's List, niche blogs, etc.). **Before relying on a source, run the AI-signal scan from `/Users/wjia/Projects/deai.skill/reference/ai-signals.md`** against the source's review text. AI-signal-heavy reviews (generic mic-drop framings, "perfect for parents who...", overused tricolons after colons, em-dashes, hedging-without-evidence) are **discarded entirely, not weighted lower.** The source-eligibility verdict (KEEP / DISCARD) appears in REPORT.md before the picks. Picks rely only on KEEP sources.
 
-The deai AI-signals catalog (`/Users/wjia/Projects/deai/reference/ai-signals.md`) is the canonical reference for this scan. Notable signal classes:
+The deai AI-signals catalog (`/Users/wjia/Projects/deai.skill/reference/ai-signals.md`) is the canonical reference for this scan. Notable signal classes:
 
 - SIG_EM_DASH — em-dashes ` — ` framing contrasts
 - SIG_NEGATIVE_PARALLELISM — "not X but Y" or "X, not Y" framings
@@ -342,7 +342,7 @@ Wei standing rule, codified 2026-05-18 (after wave-1 integration revealed Wei-vo
 2. `REPORT.md` v1 drafted with §5b pre-audit-first structure + §5c EU=T1 / US=T2 source weighting + Wei-voice rules + glossary defined on first use.
 3. Companion files written: `REFERENCES.md`, `METHODOLOGY_AUDIT.md`, `ADVERSARIAL_REVIEW.md` with §5a passes + §5c Pass 4 + §5f anti-theater force-binds + §5g evidence-of-evidence floor.
 4. Each ADVERSARIAL_REVIEW finding folded back into `REPORT.md`. A finding marked `[folded back]` must have a corresponding change; a finding marked `[surfaced honestly]` must have a corresponding caveat in `REPORT.md`.
-5. **Run the deai-scanner on REPORT.md.** Commands: `python3 ~/.claude/skills/deai/deai-scan.py <REPORT.md>` (lexical/structural signals: SIG_EM_DASH, SIG_NEGATIVE_PARALLELISM, SIG_MIC_DROP, SIG_TRICOLON_AFTER_COLON, SIG_GENERIC_PARENT_FRAMING, SIG_HEDGE_WITHOUT_EVIDENCE, SIG_AFFILIATE_BOOSTERISM) and `python3 ~/.claude/skills/deai/deai-check.py <REPORT.md>` (per-sentence score band + family coverage map + top firing sentences). Report the score, top firing families, top firing sentences, and the comparison to a Wei-canonical anchor of the same genre. Fix any signal that fires above the canonical baseline.
+5. **Run the deai-scanner on REPORT.md.** Commands: `python3 ~/.cursor/skills/deai/deai-scan.py <REPORT.md>` (lexical/structural signals: SIG_EM_DASH, SIG_NEGATIVE_PARALLELISM, SIG_MIC_DROP, SIG_TRICOLON_AFTER_COLON, SIG_GENERIC_PARENT_FRAMING, SIG_HEDGE_WITHOUT_EVIDENCE, SIG_AFFILIATE_BOOSTERISM) and `python3 ~/.cursor/skills/deai/deai-check.py <REPORT.md>` (per-sentence score band + family coverage map + top firing sentences). Report the score, top firing families, top firing sentences, and the comparison to a Wei-canonical anchor of the same genre. Fix any signal that fires above the canonical baseline.
 6. Only then: render the PDF / HTML / visual artifact.
 7. Verify the rendered artifact (page count, file size, extractable text on at least the first and last page).
 
@@ -485,12 +485,12 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 
 ## 10. Install + sync
 
-- Claude global: `~/.claude/skills/palamedes/`
+- Cursor global: `~/.cursor/skills/palamedes/`
 - Claude repo: `<repo>/.claude/skills/palamedes/`
 - Cursor: `.cursor/rules/palamedes.mdc` (frontmatter conversion; body points back at canonical)
 - Generic: `AGENTS.md` snippet referencing this dir
 
-**Drift hazard:** known mirrors at `~/.claude/skills/palamedes/SKILL.md` and any workspace sibling copies. Sync via `skill-sync` skill. This repository directory (`SKILL.md` + `references/` + `REFERENCES.md`) is the single source of truth.
+**Drift hazard:** mirrors at `~/.cursor/skills/palamedes/SKILL.md`. SoT: this directory; use `sync-dev-skills.sh` from `~/Projects/palamedes/skill` mapping or copy from repo `palamedes/skill/`.
 
 ## 11. Skill-meta, known limits
 

@@ -95,8 +95,8 @@ Supporting references in [`skill/references/`](./skill/references/) cover agenti
 
 ```sh
 # Claude global
-mkdir -p ~/.claude/skills/palamedes
-rsync -a skill/ ~/.claude/skills/palamedes/
+SYNC_DEV_CREATE=1 ~/Projects/scripts/onboard/sync-dev-skills.sh
+# or: rsync -a skill/ ~/.cursor/skills/palamedes/
 
 # Cursor
 # Convert frontmatter; the rule body can `@palamedes/skill/SKILL.md`
