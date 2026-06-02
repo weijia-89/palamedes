@@ -37,3 +37,12 @@ Most warnings will be MD013 (line-length >80) which is expected for long-form pr
 4. Commit and push; `main` deploys via Actions when path filters match.
 
 There is no `package.json` or application test suite for the static UI. The dialectic prompts and skill are consumed by copy-paste or agent load; the UI calls your OpenAI-compatible endpoint with keys in browser `localStorage` only.
+
+### System dependencies (not in-repo)
+
+- **Python 3** — required for `./scripts/serve-ui.sh` (`python3 -m http.server`, default `127.0.0.1:8765`).
+- **markdownlint-cli** — global npm package (`npm install -g markdownlint-cli`); not vendored in this repo.
+
+### UI smoke without an API key
+
+You can verify the static app without calling an LLM: start `./scripts/serve-ui.sh`, open the UI, change research field / stakes / template, type a question, and confirm the **token/cost estimate** under Setup updates (`aria-live` `#estimate`). Full “Run research” needs a user-supplied OpenAI-compatible base URL, model, and key in the browser.
