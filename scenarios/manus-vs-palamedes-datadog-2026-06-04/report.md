@@ -29,7 +29,7 @@ The scenario asks which product delivers **epistemic accuracy** (right claim, ri
 
 ### 1. Manus free-form (pilot)
 
-Manus produced a polished brief quickly. Palamedes review flagged a load-bearing error: **~120% NRR** attributed to a Tomasz Tunguz post that does not state that figure. Competitor narrative leaned on MatrixBCG and similar third-tier pages.
+Manus produced a polished brief quickly but there was a load-bearing error: **~120% NRR** attributed to a Tomasz Tunguz post that does not state that figure. Competitor narrative leaned on MatrixBCG and similar third-tier pages.
 
 **Failure mode:** citation laundering. Fluent prose + numbered references without quote-level verification.
 
