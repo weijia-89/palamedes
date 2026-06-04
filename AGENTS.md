@@ -7,6 +7,7 @@ This repo is primarily **Markdown** (LLM prompts, `skill/`, references) plus a *
 ### Repository layout
 
 - `prompts/` — Multi-agent dialectic research synthesis prompts (paste into LLM UIs).
+- `scenarios/` — Frozen calibration runs (external agent vs skill); see `scenarios/README.md`.
 - `skill/` — Agent-loadable skill file (`SKILL.md`) plus supporting reference docs in `skill/references/`.
 - `assets/` — Image assets referenced by `README.md`.
 - `ui/` — Static research app (HTML + JS, no build step); canonical UI home.

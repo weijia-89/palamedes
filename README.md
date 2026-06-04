@@ -12,6 +12,7 @@ This repo merges two earlier projects and adds a third surface:
 | --- | --- | --- |
 | **Multi-agent prompts** | [`prompts/`](./prompts/) | Human-driven deep research: parallel agents + adversarial synthesis ([`research-synthesis-prompt`](https://github.com/weijia-89/research-synthesis-prompt), archived 2026-05-16) |
 | **Agent skill** | [`skill/`](./skill/) | Loadable discipline for Claude / Cursor / Windsurf on every "research" / "investigate" / "fact-check" task ([`ai-research`](https://github.com/weijia-89/ai-research), archived 2026-05-16) |
+| **Calibration scenarios** | [`scenarios/`](./scenarios/) | Frozen regression runs (external agent vs skill); case studies + artifacts |
 | **Browser UI** | [`ui/`](./ui/) · [live](https://weijia-89.github.io/palamedes/) | Single-model convenience layer: stakes L0–L4, skill-aligned templates, local API key, short answer + report download |
 
 All three share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
@@ -90,6 +91,10 @@ The two stages are doing different work: synthesis finds sources and builds a pi
 I designed it to load automatically whenever the agent encounters trigger words ("research", "investigate", "analyze", "validate", "compare", "deep-dive", "second-opinion", "audit", "fact-check", "literature-review"). See [`skill/SKILL.md`](./skill/SKILL.md) §0 for the stakes ladder (L0–L4) and refusal conditions.
 
 Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns, bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, and source-grading tiers.
+
+### Calibration scenarios (`scenarios/`)
+
+Frozen A/B runs that stress-test the skill against external agent output, not happy-path demos. First scenario: **Manus vs palamedes** on a Datadog L2 public brief ([`scenarios/manus-vs-palamedes-datadog-2026-06-04/`](./scenarios/manus-vs-palamedes-datadog-2026-06-04/)) with artifacts, reproduction prompt, and a [DEAI-edited case study](./scenarios/manus-vs-palamedes-datadog-2026-06-04/report.md). Index: [`scenarios/README.md`](./scenarios/README.md).
 
 ### How to install the skill
 
