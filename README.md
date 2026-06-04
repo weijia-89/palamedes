@@ -15,7 +15,36 @@ This repo merges two earlier projects and adds a third surface:
 | **Calibration scenarios** | [`scenarios/`](./scenarios/) | Frozen regression runs (external agent vs skill); case studies + artifacts |
 | **Browser UI** | [`ui/`](./ui/) · [live](https://weijia-89.github.io/palamedes/) | Single-model convenience layer: stakes L0–L4, skill-aligned templates, local API key, short answer + report download |
 
-All three share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
+All four surfaces share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
+
+---
+
+## Rigor you can defend (accuracy that survives cross-examination)
+
+Most research tools optimize for a finished paragraph. Palamedes optimizes for a claim you can still defend when someone asks *show me the sentence in the filing*.
+
+That is not a semantic distinction. In a frozen public-source A/B on the same company brief and the same evidence rules, a Meta-marketed autonomous agent and Cursor running this skill often agreed on the headline numbers. They did not agree on whether those numbers were **proved**. The external run wore Palamedes-shaped sections (frame, ledger, kill list) and still hung load-bearing risk prose on vendor blogs while the kill list said metric blogs were out of scope. The free-form arm attributed net retention to a post that never stated it. The palamedes arm opened the 10-K, the IR release, the earnings call, and the supplemental, then tied each load-bearing line to a tier tag and a verbatim quote. Same prompt, same afternoon; different epistemic standard. Full artifacts: [`scenarios/manus-vs-palamedes-datadog-2026-06-04/`](./scenarios/manus-vs-palamedes-datadog-2026-06-04/).
+
+**Why that tracks to accuracy.** Wrong citations are not a formatting problem. They are wrong answers dressed as research. Palamedes treats them as first-class failures:
+
+| What speed-first output does | What palamedes enforces |
+| --- | --- |
+| "Primary" labels without read-depth | `[T1-verified]` only after retrieve + read this session |
+| Decorative `[1][2]` footnotes | Reference table: claim → URL → quoted sentence |
+| Missing metrics inferred from blogs | `SEARCHED-AND-MISSING` with sources tried, not a guess |
+| Three agents citing the same three papers | Flagged as one evidence base, not three votes |
+| Fluent risks copied from SEO roundups | Kill list + body must match; T3 cannot carry filing-grade claims |
+
+**Accuracy here means epistemic accuracy:** right claim, right source, honest uncertainty. You get fewer surprises in a hiring committee, a diligence call, or a PR review because the report already did the skeptical pass.
+
+**Built in, not bolted on.**
+
+- **Verifier split.** Synthesis builds; a separate pass (prompts, skill loop, or your review) tries to break claims instead of polishing them.
+- **Stakes ladder (L0–L4).** Light questions stay light. Ship decisions earn retrieve, read, reconcile, and a claim ledger.
+- **Held, not hallucinated.** No URL → no `[T1-verified]`. High confidence without a quote → held or downgraded.
+- **Calibration scenarios.** Regression packs like the Manus A/B above are how we change the skill without fooling ourselves; see [`scenarios/`](./scenarios/).
+
+If you only need a plausible slide, use any fast agent. If you need to be **right in public** when the room pushes back, load palamedes and make the model show its work.
 
 ---
 
@@ -94,7 +123,7 @@ Supporting references in [`skill/references/`](./skill/references/) cover agenti
 
 ### Calibration scenarios (`scenarios/`)
 
-Frozen A/B runs that stress-test the skill against external agent output, not happy-path demos. First scenario: **Manus vs palamedes** on a Datadog L2 public brief ([`scenarios/manus-vs-palamedes-datadog-2026-06-04/`](./scenarios/manus-vs-palamedes-datadog-2026-06-04/)) with artifacts, reproduction prompt, and a [DEAI-edited case study](./scenarios/manus-vs-palamedes-datadog-2026-06-04/report.md). Index: [`scenarios/README.md`](./scenarios/README.md).
+See [**Rigor you can defend**](#rigor-you-can-defend-accuracy-that-survives-cross-examination) and [`scenarios/README.md`](./scenarios/README.md).
 
 ### How to install the skill
 
