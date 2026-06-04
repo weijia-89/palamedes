@@ -19,32 +19,30 @@ All four surfaces share one methodology (process-based evaluation, verbatim quot
 
 ---
 
-## Rigor you can defend (accuracy that survives cross-examination)
+## Why rigor is the accuracy claim
 
-Most research tools optimize for a finished paragraph. Palamedes optimizes for a claim you can still defend when someone asks *show me the sentence in the filing*.
+A lot of research tooling is tuned to produce something that reads finished. I built palamedes around a narrower goal: when someone asks *where does that number come from*, you can open the filing, the IR page, or the call transcript and point at a sentence. That gap shows up in practice, not just in theory.
 
-That is not a semantic distinction. In a frozen public-source A/B on the same company brief and the same evidence rules, a Meta-marketed autonomous agent and Cursor running this skill often agreed on the headline numbers. They did not agree on whether those numbers were **proved**. The external run wore Palamedes-shaped sections (frame, ledger, kill list) and still hung load-bearing risk prose on vendor blogs while the kill list said metric blogs were out of scope. The free-form arm attributed net retention to a post that never stated it. The palamedes arm opened the 10-K, the IR release, the earnings call, and the supplemental, then tied each load-bearing line to a tier tag and a verbatim quote. Same prompt, same afternoon; different epistemic standard. Full artifacts: [`scenarios/manus-vs-palamedes-datadog-2026-06-04/`](./scenarios/manus-vs-palamedes-datadog-2026-06-04/).
+I ran a frozen public-source A/B on the same company brief with the same evidence rules: Cursor with this skill versus a well-funded autonomous research agent (Manus). On the headline metrics they often matched. On whether those metrics were **proved**, they did not. The external run copied the Palamedes outline (frame, ledger, kill list) and still leaned on vendor blogs for risk prose while the kill list ruled those sources out for load-bearing numbers. The free-form arm cited net retention to a blog post that does not contain the figure. The palamedes arm used the 10-K, the IR release, the Q3 call, and the Q4 supplemental, with tier tags and quotes in a reference table. Same prompt, same afternoon. Different standard for what counts as done. Artifacts: [`scenarios/manus-vs-palamedes-datadog-2026-06-04/`](./scenarios/manus-vs-palamedes-datadog-2026-06-04/).
 
-**Why that tracks to accuracy.** Wrong citations are not a formatting problem. They are wrong answers dressed as research. Palamedes treats them as first-class failures:
+I treat citation errors as accuracy errors, not polish issues:
 
-| What speed-first output does | What palamedes enforces |
+| What I usually see from speed-first runs | What the skill requires |
 | --- | --- |
-| "Primary" labels without read-depth | `[T1-verified]` only after retrieve + read this session |
-| Decorative `[1][2]` footnotes | Reference table: claim → URL → quoted sentence |
-| Missing metrics inferred from blogs | `SEARCHED-AND-MISSING` with sources tried, not a guess |
-| Three agents citing the same three papers | Flagged as one evidence base, not three votes |
-| Fluent risks copied from SEO roundups | Kill list + body must match; T3 cannot carry filing-grade claims |
+| "Primary" without saying what was read | `[T1-verified]` only after retrieve + read this session |
+| Numbered footnotes with no quote column | Claim → URL → quoted sentence |
+| Gaps filled from analyst blogs | `SEARCHED-AND-MISSING` and the list of sources tried |
+| Three agents, same three papers | One shared evidence base, flagged explicitly |
+| Risk copy from SEO roundups | Kill list has to match the body; T3 does not carry filing-grade claims |
 
-**Accuracy here means epistemic accuracy:** right claim, right source, honest uncertainty. You get fewer surprises in a hiring committee, a diligence call, or a PR review because the report already did the skeptical pass.
+By **accurate** I mean epistemic accuracy: right claim, right source, and uncertainty stated when the search came up empty. That is the kind of accuracy that still holds in a hiring debrief, a diligence thread, or a strategy review, because the skeptical pass is already in the artifact.
 
-**Built in, not bolted on.**
+How that shows up in the repo:
 
-- **Verifier split.** Synthesis builds; a separate pass (prompts, skill loop, or your review) tries to break claims instead of polishing them.
-- **Stakes ladder (L0–L4).** Light questions stay light. Ship decisions earn retrieve, read, reconcile, and a claim ledger.
-- **Held, not hallucinated.** No URL → no `[T1-verified]`. High confidence without a quote → held or downgraded.
-- **Calibration scenarios.** Regression packs like the Manus A/B above are how we change the skill without fooling ourselves; see [`scenarios/`](./scenarios/).
-
-If you only need a plausible slide, use any fast agent. If you need to be **right in public** when the room pushes back, load palamedes and make the model show its work.
+- **Verifier split.** One pass builds; another (prompts, skill loop, or you) tries to break claims instead of smoothing them.
+- **Stakes ladder (L0–L4).** Small questions stay small. Ship-level work gets retrieve, read, reconcile, and a ledger.
+- **Held, not invented.** No URL means no `[T1-verified]`. High confidence without a quote gets held or downgraded.
+- **Calibration scenarios.** Frozen runs like the Manus A/B are how I change the skill without pretending a tweak worked; see [`scenarios/`](./scenarios/).
 
 ---
 
@@ -123,7 +121,7 @@ Supporting references in [`skill/references/`](./skill/references/) cover agenti
 
 ### Calibration scenarios (`scenarios/`)
 
-See [**Rigor you can defend**](#rigor-you-can-defend-accuracy-that-survives-cross-examination) and [`scenarios/README.md`](./scenarios/README.md).
+See [**Why rigor is the accuracy claim**](#why-rigor-is-the-accuracy-claim) and [`scenarios/README.md`](./scenarios/README.md).
 
 ### How to install the skill
 
