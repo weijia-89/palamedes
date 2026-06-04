@@ -105,4 +105,11 @@ Append-only. Update existing entries with `## Update YYYY-MM-DD` sub-section.
 
 ## Production-observed failures (append as encountered)
 
-(None yet, appended to as the skill is exercised.)
+### 2026-06-04, External agent mimics palamedes shape without tier discipline (SCENARIO-MANUS)
+- **Domain:** L2 public company brief; autonomous research agent (Manus) vs Cursor+palamedes.
+- **Failure mode:** Palamedes-shaped sections (P1, ledger, kill list) with blog-backed risk prose and generic “Primary” tags; free-form arm cited ~120% NRR to a blog that does not contain the figure.
+- **Surface symptom:** Headline IR metrics match across arms; reference table and T1 quotes only on palamedes arm.
+- **Root cause:** vendor optimizes deliverable completeness and “accuracy” marketing, not primary-only load-bearing cites.
+- **Fix applied to skill:** frozen scenario `scenarios/manus-vs-palamedes-datadog-2026-06-04/` + regression checklist in `report.md`.
+- **How to avoid:** never treat external-agent output as verified because it looks like palamedes; run skill pass; see scenario pass criteria.
+

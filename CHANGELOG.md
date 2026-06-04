@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- **Calibration scenario** — `scenarios/manus-vs-palamedes-datadog-2026-06-04/` (frozen A/B artifacts, reproduction prompt, DEAI case study); README + skill table updated; failure-log entry SCENARIO-MANUS-2026-06.
 - **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
 - **Pages workflow verify** — `./scripts/verify-pages-workflow.sh` encodes `deploy-ui.yml` path triggers and `ui/` artifact layout; live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` at site root.
 - **Study-guide merge gate** — `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + both verify commands.
