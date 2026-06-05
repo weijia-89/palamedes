@@ -14,6 +14,7 @@ This repo merges two earlier projects and adds a third surface:
 | **Agent skill** | [`skill/`](./skill/) | Loadable discipline for Claude / Cursor / Windsurf on every "research" / "investigate" / "fact-check" task ([`ai-research`](https://github.com/weijia-89/ai-research), archived 2026-05-16) |
 | **Calibration scenarios** | [`scenarios/`](./scenarios/) | Frozen regression runs (external agent vs skill); case studies + artifacts |
 | **Browser UI** | [`ui/`](./ui/) · [live](https://weijia-89.github.io/palamedes/) | Single-model convenience layer: stakes L0–L4, skill-aligned templates, local API key, short answer + report download |
+| **HTML templates** | [`templates/`](./templates/) | Offline deliverable skeletons (study-guide site, procedural fix/setup guide) |
 
 All four surfaces share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
 
@@ -113,11 +114,11 @@ The two stages are doing different work: synthesis finds sources and builds a pi
 
 ## The skill (`skill/`)
 
-[`skill/SKILL.md`](./skill/SKILL.md) is a self-contained agent-loadable skill (v2.0.0) that gives an LLM coding agent the same epistemic discipline at the coding-task level. It runs a 7-tier loop (Type → Stakes → Retrieve → Read → Verify → Reconcile → Report), tags every load-bearing claim with source + read-depth + confidence, refuses to fabricate citations, recognizes mode collapse when agents agree because of shared priors, and is calibration-checked offline via Brier-score tracking.
+[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.7.0** in frontmatter). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; and tracks calibration offline via Brier scores.
 
 I designed it to load automatically whenever the agent encounters trigger words ("research", "investigate", "analyze", "validate", "compare", "deep-dive", "second-opinion", "audit", "fact-check", "literature-review"). See [`skill/SKILL.md`](./skill/SKILL.md) §0 for the stakes ladder (L0–L4) and refusal conditions.
 
-Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns, bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, and source-grading tiers.
+Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns, bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, source-grading tiers, and four visual output modes (PDF, landscape one-pager, study-guide site, procedural fix/setup guide).
 
 ### Calibration scenarios (`scenarios/`)
 
@@ -152,7 +153,7 @@ Static app (HTML + JS, no build step). **Published at [https://weijia-89.github.
 ./scripts/verify-pages-workflow.sh   # deploy-ui.yml paths + ui/ artifact layout
 ```
 
-Templates include full report, landscape one-pager, executive brief, **study guide site** (exam-prep outline), and **procedural guide site** (fix/setup HTML walkthrough — see [`templates/procedural-guide/README.md`](./templates/procedural-guide/README.md)). See [`ui/README.md`](./ui/README.md) for features and security notes. For dialectic multi-agent runs and live retrieval, use the prompts and/or skill; the UI is a single-model front door, not the full agent.
+Templates include full report, landscape one-pager, executive brief, **study guide site** (exam-prep outline), and **procedural guide site** (offline fix/setup HTML — copy [`templates/procedural-guide/template.html`](./templates/procedural-guide/template.html), fill section IDs, open from `file://`). See [`ui/README.md`](./ui/README.md) for UI features. For multi-agent dialectic or live retrieval, use [`prompts/`](./prompts/) and the skill; the browser UI is a single-model front door.
 
 ---
 
