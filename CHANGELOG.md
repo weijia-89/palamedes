@@ -5,8 +5,25 @@
 - **Calibration scenario** — `scenarios/manus-vs-palamedes-datadog-2026-06-04/` (frozen A/B artifacts, reproduction prompt, DEAI case study); README + skill table updated; failure-log entry SCENARIO-MANUS-2026-06.
 - **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
 - **Pages workflow verify** — `./scripts/verify-pages-workflow.sh` encodes `deploy-ui.yml` path triggers and `ui/` artifact layout; live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` at site root.
-- **Study-guide merge gate** — `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + both verify commands.
+- **Study-guide merge gate** — `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + verify commands.
 - **AGENTS.md** — documents `ui/`, serve/verify scripts, and Pages workflow for Cursor Cloud agents (sdk-review F1 P4).
+
+## skill v3.7.0 (2026-06-05): procedural-guide-site output mode
+
+Fourth visual output mode for fix, install, and setup work: one self-contained HTML file with inline CSS, meant to open offline on a phone or a garage laptop.
+
+The contract treats reassembly as load-bearing, not an appendix. Mandatory sections include a start-here gate, workflow-split shopping (`#wf-*`), bench tray layout, walkthrough Parts A–K (remove and reinstall symmetric), a put-back block (`#restore-*`), and verify with rollback.
+
+Shipped in this release:
+
+- `skill/references/procedural-guide-site.md` — output contract and domain cheatsheet
+- `templates/procedural-guide/template.html` — copy-and-fill skeleton
+- UI template stub in `ui/js/templates.js` + `ui/prompts/research-system.md`
+- Merge gate: `./scripts/verify-procedural-guide.sh`
+
+Trigger phrases include fix guide, walkthrough, setup guide, install guide, reassembly steps, RAG PC setup guide, Signal setup guide, and HTML guide. Worked example path (operator-local): `~/Downloads/2015-forester-ac-clutch-fix-guide.html`.
+
+---
 
 ## browser UI v1.1.1 (2026-05-23): GitHub Pages homepage fix
 

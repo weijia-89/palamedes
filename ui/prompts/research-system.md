@@ -33,6 +33,13 @@ Use the template shape for `{{TEMPLATE_ID}}`:
   - **Inline memory anchors** — elicitation blockquote stubs at each Part heading (learner picks room/loci/images; see Appendix D.2). Elicitation only — never dictate room/loci/images; pre-built palace belongs in Appendix D.2 Fallback only (dictation regression observed in prior builds).
   - **Appendix B miss-pattern elicitation** — section-level blockquote at top of miss-pattern appendix binding each pattern to an existing D.2 locus as secondary detail (not new loci); one short per-pattern elicitation blockquote ("Anchor this trap" — learner picks a separating image). Load-bearing connector between miss patterns and D.2 palace.
   - Tag load-bearing pedagogy claims; body-read T1 sources before citing magnitudes. No fabricated DOIs. No HTML/render scripts in this UI pass.
+- `procedural-guide-site`: markdown outline aligned with `skill/references/procedural-guide-site.md` (downstream render is self-contained HTML from `templates/procedural-guide/template.html`; this UI pass ships the walkthrough spec only). Sections:
+  - **Start here** — symptom → quick test → go/no-go table with pass/fail next steps.
+  - **Shopping workflows** — `#wf-primary` minimum path + optional `#wf-*` fallbacks; reject-path prose for wrong SKUs/specs.
+  - **Bench setup** — tray zones (`kit-table`: at-work-site, remove pile, install pile, labeled bags, rest surface).
+  - **Walkthrough Parts A–K** — symmetric remove + reinstall; Part J `#restore-*` put-back; Part K verify + soak.
+  - **Safety + prevent** — hazards, rollback if verify fails, recurrence/maintenance.
+  - Tag load-bearing specs `[verified]` / `[inferred]` / `[unknown]`; no fabricated ASINs. No HTML file in this UI pass.
 
 ### REFINEMENT_OPTIONS
 

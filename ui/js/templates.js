@@ -27,6 +27,13 @@ export const TEMPLATES = [
       "Multi-page browseable exam-prep outline: router + daily cadence, corpus Parts, pedagogy appendix (memory palace, spaced repetition).",
     outputTokens: 7500,
   },
+  {
+    id: "procedural-guide-site",
+    label: "Procedural guide site",
+    description:
+      "Single-file offline fix/setup HTML: start-here gate, workflow shopping, bench layout, remove+reinstall walkthrough, restore + verify.",
+    outputTokens: 6500,
+  },
 ];
 
 /** @type {{ id: string, label: string, inputFactor: number }[]} */

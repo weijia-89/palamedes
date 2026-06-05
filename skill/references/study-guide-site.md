@@ -15,6 +15,7 @@ This template extends the screen-first multi-page variant from `references/outpu
 | Browseable daily-cadence site for N days, no exam | Yes, partial - skip the pedagogy appendix |
 | Browseable daily-cadence site for an exam / cert / board | **Yes, full template** |
 | Reference encyclopedia, no time component | No - use the long-form PDF mode |
+| Step-by-step fix / install / setup (offline HTML) | No - use `procedural-guide-site.md` |
 
 The pedagogy appendix is the load-bearing differentiator. Skip it for non-exam study sites (e.g. a 30-day fitness program); include it for any high-volume rote-plus-application content where the user will be tested.
 
