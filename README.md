@@ -148,10 +148,11 @@ Static app (HTML + JS, no build step). **Published at [https://weijia-89.github.
 
 # Merge gates
 ./scripts/verify-study-guide-ui.sh   # study-guide template + prompt contract stubs
+./scripts/verify-procedural-guide.sh # procedural-guide template + prompt contract stubs
 ./scripts/verify-pages-workflow.sh   # deploy-ui.yml paths + ui/ artifact layout
 ```
 
-Templates include full report, landscape one-pager, executive brief, and **study guide site** (exam-prep outline — see [`ui/README.md`](./ui/README.md)). See [`ui/README.md`](./ui/README.md) for features and security notes. For dialectic multi-agent runs and live retrieval, use the prompts and/or skill; the UI is a single-model front door, not the full agent.
+Templates include full report, landscape one-pager, executive brief, **study guide site** (exam-prep outline), and **procedural guide site** (fix/setup HTML walkthrough — see [`templates/procedural-guide/README.md`](./templates/procedural-guide/README.md)). See [`ui/README.md`](./ui/README.md) for features and security notes. For dialectic multi-agent runs and live retrieval, use the prompts and/or skill; the UI is a single-model front door, not the full agent.
 
 ---
 

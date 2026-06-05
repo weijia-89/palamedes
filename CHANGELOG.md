@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- **Procedural guide site template** — `skill/references/procedural-guide-site.md` + `templates/procedural-guide/template.html` for offline single-file fix/setup/install HTML (remove+reinstall, bench layout, workflow shopping). Merge gate: `./scripts/verify-procedural-guide.sh`. Skill v3.7.0 triggers: fix guide, walkthrough, setup guide, RAG PC, Signal setup, etc.
 - **Calibration scenario** — `scenarios/manus-vs-palamedes-datadog-2026-06-04/` (frozen A/B artifacts, reproduction prompt, DEAI case study); README + skill table updated; failure-log entry SCENARIO-MANUS-2026-06.
 - **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
 - **Pages workflow verify** — `./scripts/verify-pages-workflow.sh` encodes `deploy-ui.yml` path triggers and `ui/` artifact layout; live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` at site root.

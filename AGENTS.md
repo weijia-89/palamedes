@@ -13,6 +13,7 @@ This repo is primarily **Markdown** (LLM prompts, `skill/`, references) plus a *
 - `ui/` — Static research app (HTML + JS, no build step); canonical UI home.
 - `scripts/serve-ui.sh` — Local dev server (`http://127.0.0.1:8765/`).
 - `scripts/verify-study-guide-ui.sh` — Merge gate for study-guide template + prompt contract stubs.
+- `scripts/verify-procedural-guide.sh` — Merge gate for procedural-guide template + prompt contract stubs.
 - `scripts/verify-pages-workflow.sh` — Merge gate for Pages deploy workflow paths and `ui/` artifact layout.
 - `.github/workflows/deploy-ui.yml` — Pushes `ui/` to GitHub Pages on `main` when UI paths change.
 
@@ -31,6 +32,7 @@ Most warnings will be MD013 (line-length >80) which is expected for long-form pr
 
 ```sh
 ./scripts/verify-study-guide-ui.sh
+./scripts/verify-procedural-guide.sh
 ./scripts/verify-pages-workflow.sh
 ```
 

@@ -6,6 +6,8 @@ Triggers: "render as PDF", "output to PDF", "render to HTML", "make it a deliver
 
 **Related output mode:** for a high-level dense reference card variant (A4 landscape, claim + explainer + strength + citation-link tables, intended for at-a-glance reading and printing), see `references/landscape-summary-report.md`. The two modes are complementary; long-form `REPORT.md` is the authoritative artifact, landscape `ONEPAGER.md` is a derived skim layer.
 
+**Related output mode:** for step-by-step **fix / install / setup** guides (offline single-file HTML with remove+reinstall symmetry, bench layout, workflow shopping), see `references/procedural-guide-site.md` — not the solarpunk PDF renderer above.
+
 ## Reference implementation
 
 The canonical implementation lives at `/Users/wjia/Projects/babytime/render/` and consists of three files:
