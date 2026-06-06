@@ -18,7 +18,13 @@ Run phases 1–8 in order, then the Final Gate. Each phase produces a working lo
 
 This phase has two gates: (1) does the URL resolve? (2) does the source text actually support the specific claim? Human researchers do both, they check that the paper exists AND that it says what it's being cited for. Models often skip the second.
 
-For every claim with CONFIDENCE ≥ 50:
+#### Phase 1 fan-out
+
+Pattern 7 + `scripts/p7_ops.py`. `count-primaries` → `should-fanout`. If yes: subagent → manifest → **`verify` (exit 0)** → **`merge` (exit 0; exit 1 = collapse → re-fetch/re-dispatch)**. Else serial below.
+
+#### Serial protocol (single agent OR spot-check)
+
+For every claim with CONFIDENCE ≥ 50 (when not already covered by a source manifest):
 
 **Gate A: HTTP status**
 - Fetch the cited URL. Check the HTTP response code.
@@ -192,8 +198,15 @@ Adapt each generated prompt to the specific model and capability switches the us
 ### Prompt 1: Source verification + claim-in-source check
 **Purpose:** Confirm sources exist, parse their text to verify the claim is actually supported, check population match and methodology
 
+**Dispatch (MODE B):** ≥3 URLs → one Prompt 1 per `source_id` (schema `source-manifest.schema.md`; merge via `p7_ops.py merge`). Template below = single bucket.
+
 ```
-You are a source verification agent. For each claim below, do what a careful human researcher does: fetch the source, read it, and check whether it actually says what it's being cited for. This is not a URL existence check, it is a content verification check.
+Verify source_id={{SOURCE_ID}} only. Write sources/{{SOURCE_ID}}/source-manifest.yaml. Run `p7_ops.py verify` on output.
+
+For each claim citing this source: fetch, Gate A/B/C, per-claim block below.
+
+Claims:
+{{PASTE BUCKETED CLAIMS}}
 
 For each claim:
 

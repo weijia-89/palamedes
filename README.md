@@ -18,6 +18,8 @@ This repo merges two earlier projects and adds a third surface:
 
 All four surfaces share one methodology (process-based evaluation, verbatim quoting, hierarchy of evidence, dialectic review, consensus ≠ independence). Pick the lift point that matches how you are working.
 
+**Architecture:** [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — surfaces, P1–P4 loop, deai input/output gates, trainer layer routing, merge gates, dependency graph.
+
 ---
 
 ## Why rigor is the accuracy claim
@@ -44,6 +46,8 @@ How that shows up in the repo:
 - **Stakes ladder (L0–L4).** Small questions stay small. Ship-level work gets retrieve, read, reconcile, and a ledger.
 - **Held, not invented.** No URL means no `[T1-verified]`. High confidence without a quote gets held or downgraded.
 - **Calibration scenarios.** Frozen runs like the Manus A/B are how I change the skill without pretending a tweak worked; see [`scenarios/`](./scenarios/).
+- **deai gates.** Third-party review prose is scanned on **input** (P2); L2+ reports and chat syntheses run **deai-check** on **output** before ship. See [`skill/SKILL.md`](./skill/SKILL.md) §4.1 and [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
+- **First-read lockout.** Load-bearing claims need support beyond the first retrieved source (`RETRIEVAL-ORDER[1]`); see skill §1.1.
 
 ---
 
@@ -114,11 +118,11 @@ The two stages are doing different work: synthesis finds sources and builds a pi
 
 ## The skill (`skill/`)
 
-[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.7.0** in frontmatter). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; and tracks calibration offline via Brier scores.
+[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.8.1**). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; enforces first-read anchoring (§1.1); and gates prose with **deai** on input (third-party review scan, user paste) and output (L2+ before render or final chat message).
 
 I designed it to load automatically whenever the agent encounters trigger words ("research", "investigate", "analyze", "validate", "compare", "deep-dive", "second-opinion", "audit", "fact-check", "literature-review"). See [`skill/SKILL.md`](./skill/SKILL.md) §0 for the stakes ladder (L0–L4) and refusal conditions.
 
-Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns, bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, source-grading tiers, and four visual output modes (PDF, landscape one-pager, study-guide site, procedural fix/setup guide).
+Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns, bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, source-grading tiers, on-demand methodological eval literacy, and four visual output modes (PDF, landscape one-pager, study-guide site, procedural fix/setup guide).
 
 ### Calibration scenarios (`scenarios/`)
 
@@ -151,6 +155,7 @@ Static app (HTML + JS, no build step). **Published at [https://weijia-89.github.
 ./scripts/verify-study-guide-ui.sh   # study-guide template + prompt contract stubs
 ./scripts/verify-procedural-guide.sh # procedural-guide template + prompt contract stubs
 ./scripts/verify-pages-workflow.sh   # deploy-ui.yml paths + ui/ artifact layout
+./scripts/verify_palamedes_skill.sh  # skill version parity, deai gates, doc sync
 ```
 
 Templates include full report, landscape one-pager, executive brief, **study guide site** (exam-prep outline), and **procedural guide site** (offline fix/setup HTML — copy [`templates/procedural-guide/template.html`](./templates/procedural-guide/template.html), fill section IDs, open from `file://`). See [`ui/README.md`](./ui/README.md) for UI features. For multi-agent dialectic or live retrieval, use [`prompts/`](./prompts/) and the skill; the browser UI is a single-model front door.

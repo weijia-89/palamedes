@@ -2,11 +2,35 @@
 
 ## [Unreleased]
 
-- **Calibration scenario** — `scenarios/manus-vs-palamedes-datadog-2026-06-04/` (frozen A/B artifacts, reproduction prompt, DEAI case study); README + skill table updated; failure-log entry SCENARIO-MANUS-2026-06.
-- **Study guide site template** — UI dropdown + `research-system.md` prompt aligned with `skill/references/study-guide-site.md` (router page, daily cadence, pedagogy appendix); README example added.
-- **Pages workflow verify** — `./scripts/verify-pages-workflow.sh` encodes `deploy-ui.yml` path triggers and `ui/` artifact layout; live [GitHub Pages](https://weijia-89.github.io/palamedes/) serves `ui/` at site root.
-- **Study-guide merge gate** — `./scripts/verify-study-guide-ui.sh` passes; root README documents local serve + verify commands.
-- **AGENTS.md** — documents `ui/`, serve/verify scripts, and Pages workflow for Cursor Cloud agents (sdk-review F1 P4).
+_(none)_
+
+## skill v3.8.1 (2026-06-05): review remediation, deai I/O, doc sync, cruft cleanup
+
+Trainer code-review fixes (B-1–B-5):
+
+- §2 tags: `[inferred:first-read-only]`, `[contested:multi-metric]`
+- `rag-eval-literacy.md` §REF-1: M-AR variant branch
+- Iron law #5: load `rag-eval-literacy.md` before §REF-1 claims
+- `llm-failure-modes.md`: section renamed `§RAG-judge`
+- `.cursor/rules/palamedes.mdc`: v3.8.1 stub (iron laws 1–6, FR-*, DEAI-IN/OUT)
+
+**deai gates (§4.1):** DEAI-IN at P2 (third-party review ai-signals + user paste scan); DEAI-OUT at L2+ (§5h before render; `deai-check` on chat-only final message). Paths normalized to `~/Projects/deai.skill/`.
+
+**Docs:** [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) (surfaces, loop, deai, trainer layers, dependency graph). README + AGENTS.md updated (**no eval-framework names in README**).
+
+**Cruft removed:** duplicate root `study-guide-site.md` (canonical: `skill/references/study-guide-site.md`); broken root `verify-procedural-guide.sh` (canonical: `scripts/verify-procedural-guide.sh`); duplicate root `js/` + `css/` (canonical: `ui/`). Root `index.html` → redirect to `ui/`.
+
+**Merge gate:** `./scripts/verify_palamedes_skill.sh`
+
+---
+
+## skill v3.8.0 (2026-06-05): first-read anchoring + methodological eval literacy
+
+- `skill/references/rag-eval-literacy.md` — deterministic §REF-1, §TRI-1, §MM-1, §JUD-1, §OUT-1
+- §1.1 FR-1/FR-2/FR-3 first-read lockout; iron laws #5–#6
+- Eval-corpus tiering **not** in Palamedes — trainer plan at `~/Projects/trainer.skill/references/trainer-epistemic-layers.md`
+
+---
 
 ## skill v3.7.0 (2026-06-05): procedural-guide-site output mode
 

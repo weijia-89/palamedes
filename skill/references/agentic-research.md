@@ -89,7 +89,22 @@ References: Yao et al. ReAct [YAO-REACT-2022].
 Before committing to a recommendation:
 
 - **Pre-mortem** [KLEIN-PREMORTEM]: imagine the recommendation went catastrophically wrong. Why? Each plausible failure → confidence reduction or mitigation.
-- **Adversarial collaboration**: with the user (or another agent), agree on what evidence would change each side's mind, then look for that evidence specifically. (Mercier & Sperber argumentative theory; Kahneman late-career interest.)
+- **Adversarial collaboration**: with the user (or another agent), agree on what evidence would change each side's mind, then look for that evidence specifically. (Mercier & Sperber argumentative theory; Kahneman late-career interest).
+
+## Pattern 7, Primary-source fan-out
+
+**SSOT:** `references/source-manifest.schema.md` · **Ops:** `scripts/p7_ops.py` — `count-primaries` · `should-fanout` · `gate-a` · `verify` · `merge`.
+
+Map stage only — one agent per deduped `source_id`; parent merges before P3 / Phase 2. Evidence: synthesizer-agent-research R-001/R-008; per-source granularity `[inferred]`.
+
+| Step | Who | Action |
+|---|---|---|
+| 0 | Parent | `count-primaries REFERENCES.md` → `should-fanout --primaries N`; if `no`, serialize |
+| 1 | Parent | Dedupe by `source_id`; N>3 → daily manifest |
+| 2 | Subagent ×N | Gate B/C → manifest → **`p7_ops.py verify` (mandatory)** |
+| 3 | Parent | **`p7_ops.py merge sources/`** (exit 0 required; exit 1 = `MODE-COLLAPSE-SUSPECT` → re-dispatch with independent fetches) |
+
+**LLM-only (do not script):** Gate B semantics, population match, quote authenticity, cross-source Quine–Duhem. **Not fan-out:** §5f, synthesizer reduce, ≤4 primaries at L0–2. Prompt: `prompts/adversarial-review.md` Phase 1 (8 lines).
 
 ## Harness awareness, what your runtime can / cannot do
 
@@ -115,6 +130,20 @@ If the user asks "is benchmark X meaningful for Y?":
 - Check distribution match, does X resemble production traffic?
 - GAIA [GAIA-2023], τ-bench [TAU-BENCH-2024], MLE-bench [MLE-BENCH-2024], METR [METR-2025] are agentic-task benchmarks; results lag production speed by 6–18 months `[inferred:author-heuristic]` (this lag-estimate is the skill author's; not from the benchmark papers themselves). METR's empirical doubling-time finding (~7 months for 50%-success task length) gives the closest grounded estimate.
 - "SOTA on X" is rarely transferable to your domain unless X resembles your domain.
+
+### RAG / LLM-judge eval (Palamedes research scope)
+
+**Load:** `references/rag-eval-literacy.md` (deterministic gates). **Do not** configure CI here.
+
+**Three-layer routing (code/release):** trainer owns layer assignment — `~/Projects/trainer.skill/references/trainer-epistemic-layers.md`:
+
+| Layer | Owner |
+|-------|--------|
+| L1 Decision synthesis | **palamedes** |
+| L2 Trace QA (metrics) | project harness + **form-check** |
+| L3 Structured truth | tests / **review-rigor** |
+
+IF user task = ship gate / CI / harness → **defer** to trainer routing; Palamedes answers *about* eval, not *implements* eval.
 
 ## Refusal: when not to use this skill
 

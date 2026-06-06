@@ -42,6 +42,7 @@ The LLM running this skill **is the research instrument**. All instruments have 
 | Sycophancy [SHARMA-SYC-2023] | Adjust answer toward user's apparent view. | User used loaded language; you agreed quickly. | Steelman opposite without user prompt. |
 | Lost-in-middle [LIU-LITM-2023] + non-literal long-context decay [NOLIMA-2025] | Privilege start/end of long input; on tasks without literal-match cues, accuracy collapses with length even at edges. NoLiMa body: 10/12 frontier models drop to ≤50% of base score at 32K; Llama 3.1 70B: 94.3%→42.7%. **Caveat**: NoLiMa is deliberately harder than RULER/BABILong (same Llama 3.1 70B retains 16-32K effective length there). Decay is real but workload-dependent; effective-length is a function of literal-match availability, not just token count. | Long retrieved doc; cited intro/conclusion only; long context with low literal overlap to question. | Force structural re-read of middle. Prefer focused/retrieved context over dumped context. Compress before stuff. |
 | Anchoring | First-pass answer biases later passes. | Successive passes converge without new evidence. | Generate alternative answers fresh, blind to prior. |
+| **First-read anchoring** [PALAMEDES-FR] | First source read in P2 shapes all later synthesis; later contradicting reads silently dropped. | Load-bearing claim supported only by `RETRIEVAL-ORDER[1]`; later source contradicts but claim unchanged. | **SKILL §1.1 FR gates** — second independent retrieval before `[T*-verified]`; contradiction must appear in output. |
 | Order sensitivity / prompt sensitivity [SCLAR-2024], [LU-ORDER-2022] | Prompt formatting (whitespace, separators) changes answer; few-shot example order can flip near-SOTA to near-random performance. | Single-prompt single-answer; no formatting / order variation tested. | Run paraphrase + reformat + reorder test before locking. |
 | Self-consistency mode collapse [SHUMAILOV-COLLAPSE-2024] | Sampling N times and voting can amplify uniform bias. | All samples agree; you treat as confidence. | Independent retrieval, not internal sampling. |
 | Intrinsic self-correction on reasoning [HUANG-SELFCORRECT-2023], [STECHLY-SELFVERIF-2024] | Single-pass self-critique without external grounding reduces reasoning accuracy; the critique itself biases away from the often-correct initial answer. Distinct mechanism from sycophancy, anchoring, and mode-collapse. | Critique pass had no new retrieval, no tool, no oracle, no human-elicited context, no independent debate partner. | **Ask the user first** when human knowledge is the most authoritative external evidence available. Otherwise: tool, retrieval, multi-agent debate, or skip the critique. Self-consistency (Wang 2022) over independent samples is a separate technique and remains useful. |
@@ -52,6 +53,15 @@ The LLM running this skill **is the research instrument**. All instruments have 
 | Domain over-/under-confidence | Calibration varies by domain (high in code-with-tests, low in humanities citations). | You treated all claims with same confidence band. | Adjust per-domain prior. |
 | Training-data contamination | Memorized benchmark / paper / quote. | You "know" the answer instantly. | Off-benchmark probe; verify primary. |
 | Reasoning-bypass via pattern-match | Recognize question shape, emit canned answer. | Answer arrived too fast for the apparent reasoning. | Re-derive at least once. |
+
+## §RAG-judge — RAG / LLM-judge eval instrument (load with `rag-eval-literacy.md`)
+
+| Mode | Description | Detection cue | Mitigation |
+|---|---|---|---|
+| Circular grounding | High faithfulness with wrong or incomplete retrieval. | M-F high, M-CR low on same run. | §TRI-1 split; never infer safety from M-F alone (`rag-eval-literacy.md` J-1). |
+| Judge non-reproducibility | Same config, different API/model revision → score drift. | Undocumented judge version; no pinned model id in report. | Name judge + version in §OUT-1 block; tag `[single-instrument]` if not replicated. |
+| Eval pass reuse as replication | N runs, same judge + prompts, averaged. | "We ran eval 3 times" without instrument change. | J-2: **not** independent; require J-3 instrument list. |
+| Metric → safety laundering | Ragas-style score used as clinical/legal ship gate. | Recommendation cites metric only. | J-4: **STOP** — forbidden in Palamedes output. |
 
 ## When critique is cost-justified
 
@@ -93,6 +103,8 @@ Before emitting any L2+ output:
 6. **Names:** any minor-figure attributions? Verify or downgrade.
 7. **Self-consistency:** would a fresh pass with different framing give the same answer?
 8. **Convergence-as-truth:** if multiple passes agreed, did they have access to *independent* evidence, or were they re-using the same priors?
+9. **First-read anchoring (L2+):** any load-bearing claim supported **only** by `RETRIEVAL-ORDER[1]`? If yes → fail until FR-1 satisfied (SKILL §1.1).
+10. **Late-read suppression:** any source read after position 1 contradicts an emitted claim without contradiction block? If yes → fail.
 
 Pass = output may emit. Fail any → fix or downgrade tag.
 

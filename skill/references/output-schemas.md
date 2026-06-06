@@ -54,9 +54,15 @@ Load when: drafting report, formatting findings, deciding section depth.
 ### 8. Self-instrument check (mandatory, may be terse)
 - Sycophancy: pass / flag.
 - Anchoring: pass / flag.
+- First-read anchoring (L2+): FR-1 / FR-2 / FR-3 pass / flag (SKILL §1.1).
+- deai I/O (L2+): DEAI-IN pass / flag · DEAI-OUT pass / flag (SKILL §4.1).
 - Retrieval coverage: every `[T*-verified]` claim has URL retrieved this session: yes / no.
 - Self-consistency (≥2 passes for L3): pass / flag.
 - Many-analyst caveat (single-pass at L3+): disclosed.
+
+### 9. RAG eval block (mandatory when `rag-eval-literacy.md` loaded)
+
+Copy `§OUT-1` from `references/rag-eval-literacy.md` verbatim structure. Omit = stop fail.
 
 ## Adapter, host-shape conversion
 

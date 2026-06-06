@@ -1,7 +1,7 @@
 ---
 name: palamedes
-version: 3.7.0
-description: Rigorous research / analysis / fact-check / literature-review / synthesis loop for empirical, conceptual, predictive, normative, investigative, comparative, methodological, synthetic questions. Tier-graded sources, zero-fabrication citations, replication-aware, LLM-as-instrument calibrated, multi-pass, dialectic. Triggers research, investigate, analyze, validate, compare, deep-dive, second-opinion, audit, fact-check, literature-review, lit-review, study guide, exam prep, flashcards from sources, anki from sources, build curriculum, summarize papers, extract from documentation, synthesize external sources. Output modes include long-form PDF (see `references/output-rendering.md`), landscape summary one-pager (see `references/landscape-summary-report.md`), multi-page browseable study-guide site with pedagogy appendix (see `references/study-guide-site.md`), and single-file procedural fix/setup guide HTML with remove+reinstall walkthrough (see `references/procedural-guide-site.md`). Triggers for the one-pager include "landscape summary report", "landscape summary", "one-pager", "high-level summary", "executive summary", "decision card", "skim sheet", "at-a-glance reference", "cheat sheet", "TL;DR PDF", "quick reference card", "fridge magnet". Triggers for the study-guide site include "build me a study guide", "exam prep program", "cram program", "certification site", "curriculum site", "weekday cadence", "study program for N days", "memory palace for [exam]", "pedagogy appendix", "spaced repetition program". Triggers for the procedural guide include "fix guide", "how to fix", "walkthrough", "step by step", "setup guide", "install guide", "repair guide", "reassembly steps", "tool organization", "put it back together", "RAG PC setup guide", "Signal setup guide", "procedural guide", "HTML guide". Mergesplit trigger: "incorporate" → run loop on incoming paste, then merge.
+version: 3.8.1
+description: Rigorous research / analysis / fact-check / literature-review / synthesis loop for empirical, conceptual, predictive, normative, investigative, comparative, methodological, synthetic questions. Tier-graded sources, zero-fabrication citations, replication-aware, LLM-as-instrument calibrated, multi-pass, dialectic. Triggers research, investigate, analyze, validate, compare, deep-dive, second-opinion, audit, fact-check, literature-review, lit-review, study guide, exam prep, flashcards from sources, anki from sources, build curriculum, summarize papers, extract from documentation, synthesize external sources. Triggers for RAG/LLM-judge eval literacy: ragas, rag eval, faithfulness, context recall, context precision, answer relevancy, llm-as-judge, retrieval augmented generation eval. Output modes include long-form PDF (see `references/output-rendering.md`), landscape summary one-pager (see `references/landscape-summary-report.md`), multi-page browseable study-guide site with pedagogy appendix (see `references/study-guide-site.md`), and single-file procedural fix/setup guide HTML with remove+reinstall walkthrough (see `references/procedural-guide-site.md`). Triggers for the one-pager include "landscape summary report", "landscape summary", "one-pager", "high-level summary", "executive summary", "decision card", "skim sheet", "at-a-glance reference", "cheat sheet", "TL;DR PDF", "quick reference card", "fridge magnet". Triggers for the study-guide site include "build me a study guide", "exam prep program", "cram program", "certification site", "curriculum site", "weekday cadence", "study program for N days", "memory palace for [exam]", "pedagogy appendix", "spaced repetition program". Triggers for the procedural guide include "fix guide", "how to fix", "walkthrough", "step by step", "setup guide", "install guide", "repair guide", "reassembly steps", "tool organization", "put it back together", "RAG PC setup guide", "Signal setup guide", "procedural guide", "HTML guide". Mergesplit trigger: "incorporate" → run loop on incoming paste, then merge.
 ---
 
 # palamedes
@@ -60,6 +60,7 @@ When user framing and auto-classification disagree, **use higher**. Disclose: "U
 | Investigative | "why did X happen?" | flow-of-evidence + counterfactuals (`review-rigor` flow-map) |
 | Comparative | "X vs. Y" | criteria pre-stated + symmetric scrutiny + `references/bias-catalog.md` (selective skepticism) |
 | Methodological | "how should I research X?" | this skill, recursively, on the meta-question |
+| Methodological (RAG/LLM eval) | "how does Ragas work?" / "RAG eval design" / faithfulness vs recall | `references/rag-eval-literacy.md` + `llm-failure-modes.md` §RAG-judge |
 | Synthetic | "summarize the literature on X" | `references/replication-and-validity.md` + structured-search + per-paper effect-size |
 
 If type unclear → ask once, then commit. Type drives stop conditions.
@@ -87,6 +88,23 @@ If the question contains a load-bearing premise the skill cannot verify ("why do
 - Every cite resolves to a row in `REFERENCES.md` with tier + URL/DOI + access date + read-depth. New cite → add row, then cite. No URL = no cite.
 - Quotes verbatim or prefixed `paraphrase:`. No "approximately" quotes.
 - **User-provided evidence** (paste, screenshot, PDF excerpt) is `[user-asserted]`, not `[T*-verified]`, until independently retrieved. User-provided content can be edited / selectively excerpted / fabricated upstream.
+- **Retrieval-order log (mandatory L2+):** Before first `[T*-verified]` tag on a load-bearing claim, emit and maintain:
+  ```
+  RETRIEVAL-ORDER: [1] <source_id> · [2] <source_id> · …
+  ```
+  `source_id` = REFERENCES.md row id or URL slug. Append on each new retrieval; never reorder retroactively.
+
+### §1.1 First-read anchoring lockout (mandatory L2+)
+
+Run **before P4 emit**. Failure of any gate → stop condition fail (do not ship synthesis).
+
+| Gate | IF | THEN |
+|------|-----|------|
+| **FR-1** | Load-bearing claim has **only** `RETRIEVAL-ORDER[1]` as support | Tag max `[inferred:first-read-only]` until a **second independent retrieval** (different source, query, or tool per Definitions) also supports the claim; only then `[T2-verified]`+ allowed at L2 |
+| **FR-2** | Any source with index **> 1** contradicts a claim still anchored on source 1 | Emit **Contradiction** block naming both sources **before** the claim; silent drop = fail |
+| **FR-3** | Long doc retrieved (>4000 tokens in session read-set) and claim cites **only** first or last 20% of doc | Mandatory middle re-read (offset/limit); fail until done or tag claim `[unknown]` |
+
+**Forbidden:** Treating the first plausible inference from the first opened source as settled before FR-1 clears.
 
 ### P3, Adversarial
 - **Steelman opposite** ≥1 paragraph: name the position, name an adherent if any, give its strongest case (not a strawman). **Steelman must produce different evidence requirements**, if it asks for the same evidence as the original, it is not a real opposite, it's rephrasing.
@@ -132,6 +150,8 @@ If the question contains a load-bearing premise the skill cannot verify ("why do
 | `[unknown]` | Cannot determine within budget. |
 | `[unfalsifiable]` | No test would flip. Treat as definitional or drop. |
 | `[contested]` | Credentialed disagreement; aggregation rule below. |
+| `[contested:multi-metric]` | ≥2 automated RAG metrics imply conflicting loci; run `rag-eval-literacy.md` §MM-1. |
+| `[inferred:first-read-only]` | Load-bearing claim supported only by `RETRIEVAL-ORDER[1]`; max tag until FR-1 clears (§1.1). |
 | `[stale:<date>]` | Verified but source older than relevance window (default 24mo for AI tooling, 12mo for AI safety / model behavior, 30d for active threat-intel, 5y for security architecture, evergreen for math, varies). |
 
 Numeric confidence (`p ≈ 0.7 ± 0.1`) only when decision-changing or quantitative claim. Otherwise tag suffices.
@@ -149,6 +169,10 @@ Claim: <statement> [contested]
 ```
 
 Never collapse `[contested]` to a single point answer at L3+ stakes. If the user demands one, disclose the collapse explicitly.
+
+### `[contested:multi-metric]` (automated RAG metrics)
+
+When `references/rag-eval-literacy.md` is loaded, apply **§MM-1** there. Do not duplicate prose — run the gate mechanically.
 
 ## 3. Citation protocol, zero fabrication
 
@@ -170,6 +194,21 @@ Before emit, run mentally:
 - **Order sensitivity / prompt sensitivity:** would a paraphrased prompt give a different answer? (Sclar et al. 2024.)
 
 Full list + citations in `references/llm-failure-modes.md`.
+
+## 4.1 deai gates — input and output (mandatory L2+)
+
+Canonical: `~/Projects/deai.skill/SKILL.md`, `~/Projects/deai.skill/reference/ai-signals.md`, `~/Projects/deai.skill/INVOCATION.md`. Installed overlay: `~/.cursor/skills/deai/` (via `sync-dev-skills.sh`).
+
+| Gate | When | Action |
+|------|------|--------|
+| **DEAI-IN** | P2: third-party review / guide / roundup prose before citing as evidence | §5b AI-signal scan → **KEEP** or **DISCARD** (DISCARD = do not weight lower) |
+| **DEAI-IN** | P2: user paste ≥200 words used as hypothesis | Run `deai-scan.py` or manual ai-signals pass; tag `[user-asserted]`; add `:ai-signals-flagged` if scan fires — never `[T*-verified]` |
+| **DEAI-OUT** | L2+ before PDF / HTML / visual render | §5h: `deai-scan.py` + `deai-check.py` on `REPORT.md`; fix or disclose before render |
+| **DEAI-OUT** | L2+ chat-only synthesis (no `REPORT.md` file) | `deai-check.py` on final message body before send; same fix-or-disclose rule |
+
+**Forbidden:** Self-attested "voice-clean" without scanner artifacts (§5h). Running deai only after the user asks — gate is **pre-output**, not forensics.
+
+Mid-iteration drafts may skip deai; final ship path may not.
 
 ## 5. Output
 
@@ -232,9 +271,9 @@ Wei standing rule, codified 2026-05-17 (second iteration of §5a after the babyt
 
 **1. Higher-rigor international standards.** Every safety-stakes report must scan international standards from countries with materially higher rigor than the US (typically Canada / Health Canada, Germany / ADAC, Switzerland / TCS, EU / EN-series, AS/NZS). Identify which higher-bar standards exist, name them with their scope, and **apply them as a filter against the candidate pick set BEFORE listing the picks.** A pick that only passes the US floor but is rejected by a higher-bar regulator (e.g., a product flagged by ADAC for chemical-content failure) does not appear in the picks table, or appears with a flag-down marker. The international audit is the input to the picks, not a footnote after them.
 
-**2. Review-source pre-audit with AI-signal scan.** Every report cites third-party reviewers (Wirecutter, Consumer Reports, Lucie's List, niche blogs, etc.). **Before relying on a source, run the AI-signal scan from `/Users/wjia/Projects/deai.skill/reference/ai-signals.md`** against the source's review text. AI-signal-heavy reviews (generic mic-drop framings, "perfect for parents who...", overused tricolons after colons, em-dashes, hedging-without-evidence) are **discarded entirely, not weighted lower.** The source-eligibility verdict (KEEP / DISCARD) appears in REPORT.md before the picks. Picks rely only on KEEP sources.
+**2. Review-source pre-audit with AI-signal scan.** Every report cites third-party reviewers (Wirecutter, Consumer Reports, Lucie's List, niche blogs, etc.). **Before relying on a source, run the AI-signal scan from `~/Projects/deai.skill/reference/ai-signals.md`** against the source's review text. AI-signal-heavy reviews (generic mic-drop framings, "perfect for parents who...", overused tricolons after colons, em-dashes, hedging-without-evidence) are **discarded entirely, not weighted lower.** The source-eligibility verdict (KEEP / DISCARD) appears in REPORT.md before the picks. Picks rely only on KEEP sources.
 
-The deai AI-signals catalog (`/Users/wjia/Projects/deai.skill/reference/ai-signals.md`) is the canonical reference for this scan. Notable signal classes:
+The deai AI-signals catalog (`~/Projects/deai.skill/reference/ai-signals.md`) is the canonical reference for this scan. Notable signal classes:
 
 - SIG_EM_DASH — em-dashes ` — ` framing contrasts
 - SIG_NEGATIVE_PARALLELISM — "not X but Y" or "X, not Y" framings
@@ -343,7 +382,7 @@ Wei standing rule, codified 2026-05-18 (after wave-1 integration revealed Wei-vo
 2. `REPORT.md` v1 drafted with §5b pre-audit-first structure + §5c EU=T1 / US=T2 source weighting + Wei-voice rules + glossary defined on first use.
 3. Companion files written: `REFERENCES.md`, `METHODOLOGY_AUDIT.md`, `ADVERSARIAL_REVIEW.md` with §5a passes + §5c Pass 4 + §5f anti-theater force-binds + §5g evidence-of-evidence floor.
 4. Each ADVERSARIAL_REVIEW finding folded back into `REPORT.md`. A finding marked `[folded back]` must have a corresponding change; a finding marked `[surfaced honestly]` must have a corresponding caveat in `REPORT.md`.
-5. **Run the deai-scanner on REPORT.md.** Commands: `python3 ~/.cursor/skills/deai/deai-scan.py <REPORT.md>` (lexical/structural signals: SIG_EM_DASH, SIG_NEGATIVE_PARALLELISM, SIG_MIC_DROP, SIG_TRICOLON_AFTER_COLON, SIG_GENERIC_PARENT_FRAMING, SIG_HEDGE_WITHOUT_EVIDENCE, SIG_AFFILIATE_BOOSTERISM) and `python3 ~/.cursor/skills/deai/deai-check.py <REPORT.md>` (per-sentence score band + family coverage map + top firing sentences). Report the score, top firing families, top firing sentences, and the comparison to a Wei-canonical anchor of the same genre. Fix any signal that fires above the canonical baseline.
+5. **Run the deai-scanner on REPORT.md** (DEAI-OUT; see §4.1). Commands: `python3 ~/Projects/deai.skill/deai-scan.py <REPORT.md>` (or `~/.cursor/skills/deai/deai-scan.py` after sync) for lexical/structural signals: SIG_EM_DASH, SIG_NEGATIVE_PARALLELISM, SIG_MIC_DROP, SIG_TRICOLON_AFTER_COLON, SIG_GENERIC_PARENT_FRAMING, SIG_HEDGE_WITHOUT_EVIDENCE, SIG_AFFILIATE_BOOSTERISM; and `python3 ~/Projects/deai.skill/deai-check.py <REPORT.md>` for per-sentence score band + family coverage map + top firing sentences. Report the score, top firing families, top firing sentences, and the comparison to a Wei-canonical anchor of the same genre. Fix any signal that fires above the canonical baseline.
 6. Only then: render the PDF / HTML / visual artifact.
 7. Verify the rendered artifact (page count, file size, extractable text on at least the first and last page).
 
@@ -442,11 +481,13 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 
 ## 8. Anti-patterns
 
-**Top 4 (absolute, never, iron laws):**
+**Iron laws (absolute, never):**
 1. Fabricated cite, author + year + title combo not retrieved this session.
 2. `[T*-verified]` tag without retrieval this session OR without row in `REFERENCES.md`.
 3. Convergence-as-truth, N passes agree → high confidence, without independent retrieval.
 4. **Abstract-only citation for any magnitude / scope / caveat / mechanism / methodology claim at L2+**. Abstracts are author-marketing-optimized; the headline number is best-case, the baseline is often unstated or weak, and the failure-mode caveats live in the body. Quoting a speedup, % gain, accuracy delta, or sample-size from `read:abstract` and binding any recommendation to that number is a direct violation. Allowed uses of `read:abstract`: (a) direction-of-effect at L1, (b) existence-of-method at any tier, (c) flagging a candidate to read at body-depth. Forbidden uses at L2+: any quantitative claim, any "production-ready" framing, any "X beats Y" comparison, any stacking inference. Self-violation 2026-05-16 (token-optimization research, Rounds 1+2): every MEDIUM/LOW item was abstract-only; adversarial-review forced retraction. The skill now treats abstract-only magnitude citation as `[priors-only]`, not `[T*-verified]`, regardless of where the abstract came from.
+5. **Reference-free eval laundering.** Stating or implying "metric X needs no ground truth / no reference" without **loading** **`references/rag-eval-literacy.md`**, running **§REF-1** decision tree, and naming the metric variant. Collapsing context recall (reference required) into "reference-free RAG" = fail.
+6. **First-read anchoring.** Load-bearing `[T*-verified]` claim supported only by `RETRIEVAL-ORDER[1]` at P4, or late contradicting source omitted (§1.1 FR-1 / FR-2).
 
 **Major:**
 - Approximate quote without `paraphrase:` prefix.
@@ -478,6 +519,7 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 | `references/causal-inference.md` | "X causes Y" / observational data / DAG question |
 | `references/llm-failure-modes.md` | required every session, self-instrument check |
 | `references/agentic-research.md` | parallel branches / harness / worktree / RAG / debate / **Pattern 7 primary-source fan-out** |
+| `references/rag-eval-literacy.md` | §TRIGGER in file: Ragas / RAG eval / faithfulness / context recall / ≥2 automated metrics |
 | `references/synthesizer-agent.md` | multi-lane merge; manifest ingest; context-rot prevention |
 | `references/synthesizer-agent-research.md` | evidence pass: MapReduce reduce, Co-Sight, Huang self-correction |
 | `references/output-rendering.md` | user asks for PDF / HTML / printable / deliverable (opt-in visual output mode) |
@@ -510,6 +552,10 @@ This skill cannot:
 This skill **expects to be wrong** about ~10–20% of load-bearing claims at L2 stakes, ~5% at L3, target <2% at L4. See `references/failure-log.md` to track and update.
 
 ## 12. Version + changelog
+
+**v3.8.1 (2026-06-05)**, review remediation + deai I/O docs: B-1–B-5 fixes (§2 tags `[inferred:first-read-only]` / `[contested:multi-metric]`; §REF-1 M-AR branch; iron law #5 load-before-REF-1; `llm-failure-modes.md` §RAG-judge header); §4.1 DEAI-IN/DEAI-OUT gates; deai paths normalized to `~/Projects/deai.skill/`; `docs/ARCHITECTURE.md`; README/CHANGELOG/AGENTS sync; cruft removed (duplicate root `study-guide-site.md`, broken root `verify-procedural-guide.sh`, duplicate root `js/`/`css/`); root `index.html` → redirect to `ui/`; `scripts/verify_palamedes_skill.sh`.
+
+**v3.8.0 (2026-06-05)**, RAG eval literacy + first-read anchoring: new `references/rag-eval-literacy.md` (deterministic §REF-1, §TRI-1, §MM-1, §JUD-1, §OUT-1); §1.1 FR-1/FR-2/FR-3 first-read lockout; iron laws #5 reference-free eval laundering + #6 first-read anchoring; `llm-failure-modes.md` §RAG-judge rows + checks 9–10; methodological routing row for RAG/LLM eval; description triggers for ragas/faithfulness/etc. Eval-corpus tiering **not** in Palamedes — trainer plan at `~/Projects/trainer.skill/references/trainer-epistemic-layers.md`. Triggered by MDCalc Ragas/Palamedes adversarial review + operator directive (deterministic gates, no metric pre-registration).
 
 **v3.7.0 (2026-06-05)**, procedural-guide-site output mode added: new `references/procedural-guide-site.md` + `templates/procedural-guide/template.html` for single-file offline fix/setup/install guides with mandatory remove+reinstall symmetry, `#bench-setup` tray layout, `#shopping` split by `#wf-*` workflow, and `#restore-*` put-back sections. Description triggers expanded with "fix guide", "how to fix", "walkthrough", "setup guide", "install guide", "repair guide", "reassembly steps", "tool organization", "put it back together", "RAG PC setup guide", "Signal setup guide", "procedural guide", "HTML guide". Worked example: `~/Downloads/2015-forester-ac-clutch-fix-guide.html` (2015 Forester A/C clutch shim). Fourth documented visual output mode alongside PDF, landscape one-pager, and study-guide site.
 

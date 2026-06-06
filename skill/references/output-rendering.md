@@ -160,7 +160,7 @@ Cross-references inside babytime that use the same render pipeline:
 
 The long-form PDF mode above is the default. The same design system can be applied to a **multi-page browseable HTML site** when the deliverable is meant to be opened daily, navigated week-by-week, or used as a reference corpus rather than read end-to-end as a printed artifact.
 
-**For exam-prep / certification / cram-program sites,** there is a richer template that extends this variant with a pedagogy appendix (memory palace, mnemonic quick-reference, evidence-tagged techniques, daily integration schedule). See `references/study-guide-site.md`. The remainder of this section documents the bare multi-page mechanics that both variants share.
+**For exam-prep / certification / cram-program sites,** there is a richer template that extends this variant with a pedagogy appendix (memory palace, mnemonic quick-reference, evidence-tagged techniques, daily integration schedule). See `references/study-guide-site.md`. **Typography and palette for single-file reference sites:** `~/Projects/toren/templates/study_reference_shell.css` (documented in `study_reference_shell.md`). The remainder of this section documents the bare multi-page mechanics that both variants share.
 
 **Triggers for this bare variant:** "render all pages in HTML", "daily site", "browseable", "weekday cadence", "curriculum site", "open in my browser each morning", "with citations on the right" (Tufte margin notes are the screen-first answer to the PDF tier-tag chips). For exam-prep sites specifically, prefer the `study-guide-site.md` triggers.
 

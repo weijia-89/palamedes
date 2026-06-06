@@ -1,2 +1,6 @@
 # macOS
 .DS_Store
+
+# Local-only artifacts (not for public repo)
+localonly/
+.cursor/
