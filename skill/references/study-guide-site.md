@@ -21,14 +21,15 @@ The pedagogy appendix is the load-bearing differentiator. Skip it for non-exam s
 
 ## Reference implementations
 
-Two worked examples, both at `/Users/wjia/Projects/`:
+Two worked examples under `~/Projects/`:
 
 | Project | Subject | Days | Pages | Pedagogy appendix |
 |---|---|---|---|---|
 | `qa-prep/study_guide/daily/` | QA Engineering interview prep | 30 | 35 HTML | No (skill-acquisition, not exam) |
 | `cc-prep/study_guide/daily/` | ISC2 CC certification cram | 10 weekdays | 16 HTML | **Yes, full Appendix D** |
+| `toren/applications/codility-train/` | Codility (OpenMined) | 4d sprint + 7d platform | 1 HTML | **Yes, adversarial D** |
 
-The CC-prep build is the canonical worked example of this template, including the pedagogy appendix. The qa-prep build is the canonical worked example of the bare multi-page variant.
+CC-prep = canonical Appendix D template. **codility-train** = adversarial-reviewed tiers/TAP/abort (see `playbook-adversarial-synthesis.md`, trainer `assessment-prep-pedagogy.md`). qa-prep = bare multi-page variant.
 
 ## Output structure (load-bearing)
 
@@ -82,11 +83,9 @@ The four headlines:
 
 The three compounders:
 5. **Dual coding** `[T2-verified]` (Paivio 1971; mechanism confirmed in Ondrej et al. 2025)
-6. **Interleaving** `[T2-cited]` (Rohrer and Taylor 2007; Bjork 1994)
+6. **Interleaving** `[T2]` Dunlosky **moderate**; Rohrer 2020 math; coding `[inferred]`
 7. **Generation effect** `[T2-cited]` (Slamecka and Graf 1978)
-Plus sleep consolidation, elaborative interrogation, chunking as supporting techniques.
-
-Always include the transfer-appropriate-processing caveat: **practice questions transfer better than flashcard recall when the test is MCQ application.** This anchors the recommendation that mocks beat the palace if the user has to pick one.
+Plus sleep, elaborative interrogation, chunking. **Dunlosky:** only retrieval + spacing = **high**; interleaving/self-explanation ≠ Tier 1. **Subgoal examples** `[T2]` Margulieux 2020 — foundations only. **TAP:** practice form = test form (MCQ mocks > flashcards; timed IDE > video for coding). Mocks beat palace if time-bound.
 
 ### D.2 The memory palace (build-your-own framework, with fallback)
 
@@ -151,13 +150,17 @@ The schedule should:
 
 ### D.5 Honest caveats
 
-Always include these five caveats, customized to subject:
+Ship **1–5** always; add **6–9** after adversarial pass. **Canonical claim strings:** `palamedes/scripts/pedagogy_snippets.py` (builds import; do not duplicate in generators). Coach tiers: trainer `assessment-prep-pedagogy.md`. Adversarial template: `codility-train/piranesi/outputs/playbook-adversarial-synthesis.md`.
 
-1. **The mocks beat the palace.** Retrieval practice has decades of replication; MoL has effect sizes but GRADE very low-to-low. Anchor time accordingly.
-2. **Mnemonics encode pointers, not understanding.** Use them as access paths, not substitutes.
-3. **Transfer-appropriate processing applies to the learner too.** Practice form should match exam form.
-4. **Memory palaces have a known capacity ceiling.** ~2 items per locus.
-5. **Sleep matters more than one more re-read.** Slow-wave + REM consolidation. If choosing between cram and bed, go to bed.
+1. Mocks beat palace (MoL GRADE low–low).
+2. Mnemonics = pointers, not understanding.
+3. TAP: practice form = exam form.
+4. Palace capacity ~2 items/locus.
+5. Sleep > one more re-read.
+6. Cross-domain chains → `[inferred]`.
+7. Abort rule (e.g. Day 2 recall <30%).
+8. Expressive writing demoted (Camerer 2018); anxiety-only optional.
+9. Overview ≠ exam contract; citation hygiene per `assessment-prep-pedagogy.md`.
 
 ### D.6 Sources
 
@@ -415,14 +418,13 @@ Card count target: 60-150 per domain-set. Tags should match domains and cross-cu
    - Edit the exclusion list per user's prior knowledge
    - Generate the .apkg
 
-8. **Verify:**
-   - All HTML files render without em-dashes (scrub before render)
+8. **Verify:** Run `palamedes/scripts/verify_study_guide_site.sh <mode> <dir>` after build (`codility-train` or `openmined`). Syncs `pedagogy_contract.inc.sh` from `pedagogy_snippets.py` and runs `verify-consumers` (no duplicated tier strings in build scripts). Additional manual checks:
    - Router auto-routes to today's page
-   - All Part blockquotes render as styled callouts AND read as elicitation, not dictation
-   - Appendix D.4 schedule lines up with the cadence dates
+   - Part blockquotes are elicitation, not dictation
+   - Appendix D.4 schedule lines up with cadence dates
    - Anki deck imports cleanly
-   - Notes feature smoke test: start `notes_server.py`, POST a note, verify it lands in `daily_notes.md`, PUT to update, DELETE to remove, confirm the markdown is restored. Static-file serving returns 200 for `index.html` and `notes.js`.
-   - GH Pages dry-run: open `study_guide/daily/index.html` directly via `file://` (no backend, no localhost); confirm baked-in notes display, mode pill says "view-only", server banner shows the start command, and Export downloads a clean markdown file.
+   - Notes smoke test: `notes_server.py` POST/PUT/DELETE round-trip
+   - GH Pages dry-run: `file://` index, baked notes, export markdown
 
 ## Failure modes specific to study-guide sites
 

@@ -4,6 +4,20 @@
 
 _(none)_
 
+## skill v3.10.0 (2026-06-15): prompt-harness epistemic ingest (piranesi canon)
+
+- **outside-input-ingest.md** — 2-pass piranesi ingest handling (PASS 2 canonical for extraction).
+- **synthesizer-agent.md** — role-relabel verification + per-constraint split (C-DG001/005).
+- **SKILL.md** v3.10.0 — description triggers for harness patterns.
+- **verify_palamedes_skill.sh** — version parity pin 3.10.0; `pedagogy_snippets.py verify-consumers` (defers when toren build scripts absent).
+
+Canon refs: C-DG001, C-DG005, C-DG007/008 (prompt-harness-epistemic).
+
+## skill v3.9.0 (2026-06-07): Pattern 8 outside-input ingest
+
+- **references/outside-input-ingest.md** — document → source-verify ladder.
+- Pattern 8 routing in SKILL.md §9.
+
 ## skill v3.8.1 (2026-06-05): review remediation, deai I/O, doc sync, cruft cleanup
 
 Trainer code-review fixes (B-1–B-5):

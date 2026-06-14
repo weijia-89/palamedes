@@ -1,12 +1,14 @@
 ---
 name: palamedes
-version: 3.8.1
-description: Rigorous research / analysis / fact-check / literature-review / synthesis loop for empirical, conceptual, predictive, normative, investigative, comparative, methodological, synthetic questions. Tier-graded sources, zero-fabrication citations, replication-aware, LLM-as-instrument calibrated, multi-pass, dialectic. Triggers research, investigate, analyze, validate, compare, deep-dive, second-opinion, audit, fact-check, literature-review, lit-review, study guide, exam prep, flashcards from sources, anki from sources, build curriculum, summarize papers, extract from documentation, synthesize external sources. Triggers for RAG/LLM-judge eval literacy: ragas, rag eval, faithfulness, context recall, context precision, answer relevancy, llm-as-judge, retrieval augmented generation eval. Output modes include long-form PDF (see `references/output-rendering.md`), landscape summary one-pager (see `references/landscape-summary-report.md`), multi-page browseable study-guide site with pedagogy appendix (see `references/study-guide-site.md`), and single-file procedural fix/setup guide HTML with remove+reinstall walkthrough (see `references/procedural-guide-site.md`). Triggers for the one-pager include "landscape summary report", "landscape summary", "one-pager", "high-level summary", "executive summary", "decision card", "skim sheet", "at-a-glance reference", "cheat sheet", "TL;DR PDF", "quick reference card", "fridge magnet". Triggers for the study-guide site include "build me a study guide", "exam prep program", "cram program", "certification site", "curriculum site", "weekday cadence", "study program for N days", "memory palace for [exam]", "pedagogy appendix", "spaced repetition program". Triggers for the procedural guide include "fix guide", "how to fix", "walkthrough", "step by step", "setup guide", "install guide", "repair guide", "reassembly steps", "tool organization", "put it back together", "RAG PC setup guide", "Signal setup guide", "procedural guide", "HTML guide". Mergesplit trigger: "incorporate" → run loop on incoming paste, then merge.
+version: 3.10.0
+description: Rigorous research / analysis / fact-check / literature-review / synthesis loop for empirical, conceptual, predictive, normative, investigative, comparative, methodological, synthetic questions. Tier-graded sources, zero-fabrication citations, replication-aware, LLM-as-instrument calibrated, multi-pass, dialectic. Triggers research, investigate, analyze, validate, compare, deep-dive, second-opinion, audit, fact-check, literature-review, lit-review, study guide, exam prep, flashcards from sources, anki from sources, build curriculum, summarize papers, extract from documentation, synthesize external sources. Triggers outside-input ingest — Opus/ChatPRD returns, Downloads artifact drops, merge external documents, ingest lane manifests, verify cited primaries — via Pattern 8 (document sub-agent → 1–5 source sub-sub-agents → synthesizer). Role-relabel verification, 2-pass piranesi ingest handling, per-constraint split on multi-constraint synthesis. Triggers for RAG/LLM-judge eval literacy: ragas, rag eval, faithfulness, context recall, context precision, answer relevancy, llm-as-judge, retrieval augmented generation eval. Output modes include long-form PDF (see `references/output-rendering.md`), landscape summary one-pager (see `references/landscape-summary-report.md`), multi-page browseable study-guide site with pedagogy appendix (see `references/study-guide-site.md`), and single-file procedural fix/setup guide HTML with remove+reinstall walkthrough (see `references/procedural-guide-site.md`). Triggers for the one-pager include "landscape summary report", "landscape summary", "one-pager", "high-level summary", "executive summary", "decision card", "skim sheet", "at-a-glance reference", "cheat sheet", "TL;DR PDF", "quick reference card", "fridge magnet". Triggers for the study-guide site include "build me a study guide", "exam prep program", "cram program", "certification site", "curriculum site", "weekday cadence", "study program for N days", "memory palace for [exam]", "pedagogy appendix", "spaced repetition program". Triggers for the procedural guide include "fix guide", "how to fix", "walkthrough", "step by step", "setup guide", "install guide", "repair guide", "reassembly steps", "tool organization", "put it back together", "RAG PC setup guide", "Signal setup guide", "procedural guide", "HTML guide". Mergesplit trigger: "incorporate" → run loop on incoming paste, then merge.
 ---
 
 # palamedes
 
 Loop is process. Output is product. Both are auditable artifacts. Reasoning may be quiet but must be **written somewhere** the user can inspect (in-message tags, scratch file, or report). Silent ≠ undocumented.
+
+**Path output (iron law):** Operator-facing file references in reports, prompts, and handoffs = **full absolute paths as plain text** — `~/Projects/trainer.skill/references/operator-path-output.md`.
 
 ## Definitions (referenced throughout)
 
@@ -22,7 +24,7 @@ Loop is process. Output is product. Both are auditable artifacts. Reasoning may 
 First output line of any session that triggers this skill:
 
 ```
-palamedes v3 engaged · type=<empirical|conceptual|predictive|normative|investigative|comparative|methodological|synthetic> · stakes=<L0|L1|L2|L3|L4> · budget=<tools-allowed>
+palamedes v3.10 engaged · type=<empirical|conceptual|predictive|normative|investigative|comparative|methodological|synthetic> · stakes=<L0|L1|L2|L3|L4> · budget=<tools-allowed>
 ```
 
 Forces commitment to type + stakes routing. The user (and you) can audit the routing. Skip preamble = skill not invoked.
@@ -81,6 +83,7 @@ If the question contains a load-bearing premise the skill cannot verify ("why do
 
 ### P2, Retrieve
 - **Pattern 7:** `count-primaries` → `should-fanout` → agents → **`verify`** → **`merge` (exit 1 = collapse, re-dispatch)**.
+- **Pattern 8 (outside input):** when operator drops external artifacts (Piranesi/Opus returns, Downloads paths, adversarial reviews) → **one sub-agent per document** → **sub-sub-agents verify 1–5 cited primaries each** → adversarial → synthesizer → parent judge. SSOT: `references/outside-input-ingest.md`. External `verified` tags = `user-asserted` until L2 `gate_b: in-source`.
 - Tool budget stated: read > grep > web-fetch > LLM-priors (each ≈10× cost AND 10× lower hallucination risk than the next, in that order).
 - For named files / functions / APIs / quotes / numbers: **read the body**. Do not summarize from name (cf. `review-rigor` S1).
 - **Read-depth tagging (mandatory).** Annotate each verified cite with depth: `read:full` / `read:body` / `read:abstract` / `read:title`. **Iron-law floor (Anti-Pattern #4): `read:body` is the minimum for any magnitude / scope / caveat / mechanism / methodology claim at L2 or higher.** `read:abstract` is sufficient ONLY for (a) direction-of-effect at L1, (b) existence-of-method, (c) flagging a paper to body-read later. Quoting a speedup, %-gain, accuracy delta, or sample-size from an abstract for a recommendation is forbidden at L2+, even if the abstract was retrieved from a top-tier venue. Abstract-only magnitude citation downgrades the tag to `[priors-only]`. See Anti-Pattern #4 in §8 for the 2026-05-16 self-violation precedent (Chain-of-Draft accuracy inversion revealed only by body-read).
@@ -518,9 +521,10 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 | `references/bias-catalog.md` | every multi-claim report (cognitive + research + LLM bias list) |
 | `references/causal-inference.md` | "X causes Y" / observational data / DAG question |
 | `references/llm-failure-modes.md` | required every session, self-instrument check |
-| `references/agentic-research.md` | parallel branches / harness / worktree / RAG / debate / **Pattern 7 primary-source fan-out** |
+| `references/agentic-research.md` | parallel branches / harness / worktree / RAG / debate / **Pattern 7** + **Pattern 8** |
+| `references/outside-input-ingest.md` | **Pattern 8** — external artifact drop; doc sub-agent → 1–5 source sub-sub-agents; Piranesi return path |
 | `references/rag-eval-literacy.md` | §TRIGGER in file: Ragas / RAG eval / faithfulness / context recall / ≥2 automated metrics |
-| `references/synthesizer-agent.md` | multi-lane merge; manifest ingest; context-rot prevention |
+| `references/synthesizer-agent.md` | multi-lane merge; manifest ingest; context-rot prevention; Pattern 8 wave graph |
 | `references/synthesizer-agent-research.md` | evidence pass: MapReduce reduce, Co-Sight, Huang self-correction |
 | `references/output-rendering.md` | user asks for PDF / HTML / printable / deliverable (opt-in visual output mode) |
 | `references/study-guide-site.md` | user asks for an exam-prep / cram / certification / curriculum site with daily cadence and pedagogy appendix |
@@ -552,6 +556,8 @@ This skill cannot:
 This skill **expects to be wrong** about ~10–20% of load-bearing claims at L2 stakes, ~5% at L3, target <2% at L4. See `references/failure-log.md` to track and update.
 
 ## 12. Version + changelog
+
+**v3.9.0 (2026-06-07)**, Pattern 8 outside-input ingest: new `references/outside-input-ingest.md` (document sub-agent → source-verifier sub-sub-agents capped at 1–5 primaries → adversarial → synthesizer); `agentic-research.md` Pattern 8; `synthesizer-agent.md` outside-input wave graph; P2 routing + description triggers; Piranesi return-path cross-link. Triggered by engram search-operator canon ingest (6 adversarial + 6 lane manifests) and operator directive to fan out per document with primary-source verification instead of parent monolithic merge.
 
 **v3.8.1 (2026-06-05)**, review remediation + deai I/O docs: B-1–B-5 fixes (§2 tags `[inferred:first-read-only]` / `[contested:multi-metric]`; §REF-1 M-AR branch; iron law #5 load-before-REF-1; `llm-failure-modes.md` §RAG-judge header); §4.1 DEAI-IN/DEAI-OUT gates; deai paths normalized to `~/Projects/deai.skill/`; `docs/ARCHITECTURE.md`; README/CHANGELOG/AGENTS sync; cruft removed (duplicate root `study-guide-site.md`, broken root `verify-procedural-guide.sh`, duplicate root `js/`/`css/`); root `index.html` → redirect to `ui/`; `scripts/verify_palamedes_skill.sh`.
 

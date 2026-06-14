@@ -106,6 +106,27 @@ Map stage only — one agent per deduped `source_id`; parent merges before P3 / 
 
 **LLM-only (do not script):** Gate B semantics, population match, quote authenticity, cross-source Quine–Duhem. **Not fan-out:** §5f, synthesizer reduce, ≤4 primaries at L0–2. Prompt: `prompts/adversarial-review.md` Phase 1 (8 lines).
 
+## Pattern 8, Outside-input ingest (document → source-verify ladder)
+
+**SSOT:** `references/outside-input-ingest.md` · **Packets:** `packets-palamedes-synthesizer-dispatch.md` § Outside-input.
+
+Use when the operator drops **external artifacts** (Opus/ChatPRD returns, Downloads paths, adversarial reviews, lane manifests) — not fresh in-session retrieval.
+
+| Step | Who | Action |
+|---|---|---|
+| 0 | Parent | Inventory documents → `dispatch-manifest.yaml` (`outside_input: true`) |
+| 1 | Subagent ×N docs | **Document ingestor** → `doc-manifest-{id}.yaml` + `primaries_to_verify[]` (no fetch) |
+| 2 | Sub-subagent ×⌈P/5⌉ | **Source verifier** batches of **1–5 primaries** → `sources/{doc}/{source_id}.yaml` → **`p7_ops.py verify`** |
+| 3 | Subagent ×1 | Adversarial on doc manifests (+ L2 gate results) → `challenge-manifest.yaml` |
+| 4 | Subagent ×1 | Synthesizer reduce → `synthesis-manifest.yaml` (no retrieval) |
+| 5 | Parent | Judge — apply `canon_ops` / playbook patches |
+
+**Composes with Pattern 7:** L2 source verifiers use the same `source-manifest.schema.md` and `p7_ops.py` gates. Pattern 8 adds the **document** map stage upstream.
+
+**Piranesi return path:** export via Piranesi → external session → artifact drop → **Pattern 8**, not parent monolithic merge.
+
+**Iron laws:** External `verified` → `user-asserted` until L2 `gate_b: in-source`; never >5 primaries per verifier agent; synthesizer never fetches.
+
 ## Harness awareness, what your runtime can / cannot do
 
 Map this in P1:

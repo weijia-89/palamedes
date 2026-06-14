@@ -21,6 +21,10 @@ Load when: final synthesis risks **context rot** (multi-lane research, 75+ canon
 
 Synthesizer is **not** Prosecutor/Defender/Judge (`agentic-research.md` Pattern 2). Debate detects conflicts **before** merge (Co-Sight: "debate as detection process"). Synthesizer **merges tagged claims**.
 
+**Role-relabel verification (Pattern 8 / multi-stage piranesi):** When synthesizing from multiple stage ingests or `doc-manifest-*.yaml` files, present each stage's claims as **external input** (user-role framing). Do not treat prior-stage claims as your own conclusions. Audit for contradictions across stages before merge.
+
+**Per-constraint verification (C-DG005):** When synthesis output has >3 simultaneous constraints (schema + word limit + epistemic tags + source fidelity), verify compliance with **each** constraint in a separate pass after reduce — do not assume one read catches all.
+
 **Huang rule:** Synthesizer must not intrinsically self-correct tags or quotes — external adversarial + parent verifier only.
 
 ---
@@ -127,12 +131,26 @@ Plus **`synthesis.md`** (≤800w).
 
 ## Wave graph
 
+**Greenfield research (producers retrieve):**
+
 ```
 Wave 0: Producers (parallel)
 Wave 1: Adversarial (CAMV)
 Wave 2: Synthesizer (reduce)
 Wave 3: Parent Judge (external verifier)
 ```
+
+**Outside-input ingest (Pattern 8 — external artifacts):**
+
+```
+Wave ingest:  Document ingestor ×N (1 sub-agent per file)
+Wave verify:  Source verifier sub-sub-agents (1–5 primaries each) → p7_ops verify
+Wave attack:  Adversarial (CAMV on doc-manifests + gate results)
+Wave reduce:  Synthesizer (manifest only)
+Wave judge:   Parent apply canon_ops
+```
+
+See `outside-input-ingest.md`. Synthesizer input = `doc-manifest-*.yaml` + `challenge-manifest.yaml` — **not** raw Downloads prose.
 
 ---
 

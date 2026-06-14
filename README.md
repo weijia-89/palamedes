@@ -118,11 +118,11 @@ The two stages are doing different work: synthesis finds sources and builds a pi
 
 ## The skill (`skill/`)
 
-[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.8.1**). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; enforces first-read anchoring (§1.1); and gates prose with **deai** on input (third-party review scan, user paste) and output (L2+ before render or final chat message).
+[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.10.0**). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; enforces first-read anchoring (§1.1); and gates prose with **deai** on input (third-party review scan, user paste) and output (L2+ before render or final chat message).
 
 I designed it to load automatically whenever the agent encounters trigger words ("research", "investigate", "analyze", "validate", "compare", "deep-dive", "second-opinion", "audit", "fact-check", "literature-review"). See [`skill/SKILL.md`](./skill/SKILL.md) §0 for the stakes ladder (L0–L4) and refusal conditions.
 
-Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns, bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, source-grading tiers, on-demand methodological eval literacy, and four visual output modes (PDF, landscape one-pager, study-guide site, procedural fix/setup guide).
+Supporting references in [`skill/references/`](./skill/references/) cover agentic-research patterns (Pattern 7 fan-out, Pattern 8 outside-input ingest), bias catalog, causal inference primer, confidence calibration (Brier scoring), failure-log of prior bootstrap traps, LLM-specific failure modes, output schemas, replication-and-validity rules, source-grading tiers, on-demand methodological eval literacy, and four visual output modes (PDF, landscape one-pager, study-guide site, procedural fix/setup guide). **Pattern 8 SSOT:** [`skill/references/outside-input-ingest.md`](./skill/references/outside-input-ingest.md) — Piranesi return-path ingest with role-relabel and 2-pass boundary handling.
 
 ### Calibration scenarios (`scenarios/`)
 
