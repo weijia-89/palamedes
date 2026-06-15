@@ -1,6 +1,6 @@
 # Palamedes architecture
 
-Single repo, four user-facing surfaces, one epistemic methodology. Canonical skill body: [`skill/SKILL.md`](../skill/SKILL.md) (**v3.8.1**).
+Single repo, four user-facing surfaces, one epistemic methodology. Canonical skill body: [`skill/SKILL.md`](../skill/SKILL.md) (**v3.11.0**).
 
 ## Surfaces
 
@@ -18,7 +18,7 @@ Single repo, four user-facing surfaces, one epistemic methodology. Canonical ski
 
 ```
 P1 Frame     → stakes L0–L4, pre-register, falsifier
-P2 Retrieve  → RETRIEVAL-ORDER log, read-depth, DEAI-IN
+P2 Retrieve  → RETRIEVAL-ORDER log, read-depth, DEAI-IN; Pattern 8 (external artifacts) · Pattern 9 (literature corpus)
 P3 Adversarial → steelman, bias scan, llm-failure-modes
 P4 Synthesize  → tags, FR-1/FR-2/FR-3, DEAI-OUT, stop conditions
 ```

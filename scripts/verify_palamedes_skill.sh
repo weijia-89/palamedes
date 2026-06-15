@@ -14,7 +14,11 @@ test -f docs/ARCHITECTURE.md
 test -f CHANGELOG.md
 test -f README.md
 
-grep -q 'version: 3.10.0' "$SKILL"
+grep -q 'version: 3.11.0' "$SKILL"
+test -f skill/references/literature-corpus-fanout.md
+test -f skill/references/authoritative-review-literacy.md
+test -f skill/references/prompts/literature-paper-ingest.md
+grep -q 'Pattern 9' "$SKILL"
 grep -q '4.1 deai gates' "$SKILL"
 grep -q 'FR-1' "$SKILL"
 grep -q 'inferred:first-read-only' "$SKILL"
@@ -23,14 +27,15 @@ grep -q 'IF M = answer relevancy' skill/references/rag-eval-literacy.md
 grep -q 'loading.*rag-eval-literacy' "$SKILL" || grep -q 'load.*rag-eval-literacy' "$SKILL"
 
 if [[ -f "$RULE" ]]; then
-  grep -q 'v3.10.0' "$RULE"
+  grep -q 'v3.11.0' "$RULE"
   grep -q 'DEAI-IN' "$RULE"
   grep -q 'Iron laws' "$RULE"
 fi
 
 grep -q 'DEAI-IN' docs/ARCHITECTURE.md
 grep -q 'DEAI-OUT' docs/ARCHITECTURE.md
-grep -q 'v3.10.0' README.md
+grep -q 'v3.11.0' README.md
+grep -q 'v3.11.0' docs/ARCHITECTURE.md
 
 # Cruft must stay removed
 test ! -f study-guide-site.md

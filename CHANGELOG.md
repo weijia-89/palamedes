@@ -4,6 +4,17 @@
 
 _(none)_
 
+## skill v3.11.0 (2026-06-14): Pattern 9 literature corpus fan-out
+
+- **literature-corpus-fanout.md** — one sub-agent per paper → critical P3 ingest → `LITERATURE_INDEX.md` → `SYNTHESIS.md`.
+- **authoritative-review-literacy.md** — systematic review vs meta-analysis vs meta-review; AUTH-1 checklist; routing weight for review papers.
+- **prompts/literature-paper-ingest.md** — sub-agent dispatch templates.
+- **agentic-research.md** · **synthesizer-agent.md** · **source-grading.md** · **outside-input-ingest.md** — Pattern 9 cross-links and wave graph.
+- **examples.md** — worked reference: llm-benchmark-routing literature corpus.
+- **verify_palamedes_skill.sh** — version parity pin 3.11.0 + Pattern 9 file checks; `docs/ARCHITECTURE.md` v3.11.0 parity.
+
+Triggered by operator directive to incorporate sub-agent index/fan-out for authoritative papers (systematic reviews, meta-analyses) into Palamedes canon.
+
 ## skill v3.10.0 (2026-06-15): prompt-harness epistemic ingest (piranesi canon)
 
 - **outside-input-ingest.md** — 2-pass piranesi ingest handling (PASS 2 canonical for extraction).

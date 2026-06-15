@@ -37,6 +37,10 @@ Load when: tier dispute, new domain, source provenance question, primary-vs-seco
 
 **Use only with explicit downgrade note in citation.** Do not aggregate T3 sources into a `[T1-verified]` claim by counting agreement.
 
+## Review literature
+
+Load `authoritative-review-literacy.md` for systematic reviews, meta-analyses, meta-reviews. Iron law: meta-review≠meta-analysis. Corpora ≥3 papers: Pattern 9 (`literature-corpus-fanout.md`).
+
 ## Provenance audit checklist
 
 Before citing any source:

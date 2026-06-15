@@ -113,3 +113,5 @@ Each example shows prompt → bad output (typical LLM) → good output (skill-ap
 - **Version drift** → re-retrieve or tag `[stale]`.
 - **No what-would-change-my-mind** → claim unfalsifiable.
 - **No conditionality** → "best practice" claims should be conditional or refused.
+
+**Example 3 (Pattern 9):** LLM benchmark routing literature — `/Users/dubs/Projects/piranesi.skill/research/llm-benchmark-routing/literature/` (20 papers → ingests → index → synthesis). See `literature-corpus-fanout.md`.

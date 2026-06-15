@@ -4,7 +4,7 @@ Load when: operator drops **external artifacts** (Opus/ChatPRD returns, Download
 
 **SSOT for:** Piranesi export **return path**, engram research W2 ingest, theory-canon merges, any "merge N external documents" task.
 
-**Composes with:** Pattern 7 (`agentic-research.md`) · `synthesizer-agent.md` · `source-manifest.schema.md` · `scripts/p7_ops.py`
+**Composes with:** Pattern 7 (`agentic-research.md`) · Pattern 9 (`literature-corpus-fanout.md` — when corpus is papers, not external returns) · `synthesizer-agent.md` · `source-manifest.schema.md` · `scripts/p7_ops.py`
 
 ---
 
@@ -28,6 +28,8 @@ Parent agent that reads 6–12 external documents in one context:
 | ≥2 external documents to merge | Pattern 8 |
 | Single document but ≥5 distinct cited primaries on load-bearing claims | Pattern 8 |
 | Piranesi/Opus session outputs saved as files | Pattern 8 return path |
+| ≥3 peer-reviewed PDFs / full-text papers to synthesize | **Pattern 9** (`literature-corpus-fanout.md`) — not Pattern 8 |
+| Systematic reviews / meta-analyses corpus + index | **Pattern 9** + `authoritative-review-literacy.md` |
 | Stakes L2+ and external doc asserts operator viability | Pattern 8 |
 | Fresh in-session retrieval only, no external docs | Pattern 7 only |
 | One-lane L1 summary of one paste | Parent P4; skip fan-out |

@@ -127,6 +127,10 @@ Use when the operator drops **external artifacts** (Opus/ChatPRD returns, Downlo
 
 **Iron laws:** External `verified` → `user-asserted` until L2 `gate_b: in-source`; never >5 primaries per verifier agent; synthesizer never fetches.
 
+## Pattern 9 — Literature corpus fan-out
+
+Load when: ≥3 peer-reviewed papers, systematic-review/meta-analysis corpus, or `literature/` tree. **SSOT:** `literature-corpus-fanout.md` + `authoritative-review-literacy.md` + `prompts/literature-paper-ingest.md`. Not P8. Iron laws: 1 paper/sub-agent; meta-review≠meta-analysis; no parent monolith-read at N≥5.
+
 ## Harness awareness, what your runtime can / cannot do
 
 Map this in P1:

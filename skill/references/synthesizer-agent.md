@@ -152,6 +152,8 @@ Wave judge:   Parent apply canon_ops
 
 See `outside-input-ingest.md`. Synthesizer input = `doc-manifest-*.yaml` + `challenge-manifest.yaml` — **not** raw Downloads prose.
 
+**Pattern 9:** wave graph + schemas in `literature-corpus-fanout.md`. Input = `LITERATURE_INDEX.md` + ingests only.
+
 ---
 
 ## References
