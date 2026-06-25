@@ -118,7 +118,7 @@ The two stages are doing different work: synthesis finds sources and builds a pi
 
 ## The skill (`skill/`)
 
-[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.11.0**). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; enforces first-read anchoring (§1.1); and gates prose with **deai** on input (third-party review scan, user paste) and output (L2+ before render or final chat message).
+[`skill/SKILL.md`](./skill/SKILL.md) is the agent-loadable skill (**v3.12.0**). It runs the P1–P4 loop at the coding-task level: tags load-bearing claims with source, read-depth, and confidence; refuses fabricated citations; flags mode collapse when agents agree on shared priors; enforces first-read anchoring (§1.1); and gates prose with **deai** on input (third-party review scan, user paste) and output (L2+ before render or final chat message).
 
 I designed it to load automatically whenever the agent encounters trigger words ("research", "investigate", "analyze", "validate", "compare", "deep-dive", "second-opinion", "audit", "fact-check", "literature-review"). See [`skill/SKILL.md`](./skill/SKILL.md) §0 for the stakes ladder (L0–L4) and refusal conditions.
 
