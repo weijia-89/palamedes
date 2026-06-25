@@ -4,6 +4,16 @@
 
 _(none)_
 
+## skill v3.12.0 (2026-06-25): tokenopt + cross-field evidence canon
+
+- **SKILL.md** v3.12.0 — CSO/description ≤80 chars; §0.2 compaction + constraint pinning + L3+ turn-16 checkpoint; iron-law prose form; Cursor official rule-mode names.
+- **palamedes.mdc** — thin canonical pointer (no duplicated loop/iron-law prose).
+- **legal-evidence-retrieval.md** · **threat-intel-evidence-retrieval.md** · **financial-evidence-retrieval.md** — domain retrieval protocols (PCAOB/CISA/citator mappings [inferred]).
+- **source-grading.md** — domain playbook index.
+- **verify_palamedes_skill.sh** — v3.12.0 parity + description length gate + thin-rule checks.
+
+Canon: `/Users/dubs/Projects/piranesi.skill/research-projects/0624-palamedes-tokenopt/returns/palamedes_tokenopt_decision_canon_20260625.md`
+
 ## skill v3.11.0 (2026-06-14): Pattern 9 literature corpus fan-out
 
 - **literature-corpus-fanout.md** — one sub-agent per paper → critical P3 ingest → `LITERATURE_INDEX.md` → `SYNTHESIS.md`.

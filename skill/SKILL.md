@@ -1,7 +1,7 @@
 ---
 name: palamedes
-version: 3.11.0
-description: Rigorous research / analysis / fact-check / literature-review / synthesis loop for empirical, conceptual, predictive, normative, investigative, comparative, methodological, synthetic questions. Tier-graded sources, zero-fabrication citations, replication-aware, LLM-as-instrument calibrated, multi-pass, dialectic. Triggers research, investigate, analyze, validate, compare, deep-dive, second-opinion, audit, fact-check, literature-review, lit-review, study guide, exam prep, flashcards from sources, anki from sources, build curriculum, summarize papers, extract from documentation, synthesize external sources. Triggers outside-input ingest — Opus/ChatPRD returns, Downloads artifact drops, merge external documents, ingest lane manifests, verify cited primaries — via Pattern 8 (document sub-agent → 1–5 source sub-sub-agents → synthesizer). Triggers literature corpus fan-out — systematic reviews, meta-analyses, authoritative paper corpus, one sub-agent per paper, literature index — via Pattern 9 (critical paper ingest → LITERATURE_INDEX → SYNTHESIS; load authoritative-review-literacy for review-type papers). Role-relabel verification, 2-pass piranesi ingest handling, per-constraint split on multi-constraint synthesis. Triggers for RAG/LLM-judge eval literacy: ragas, rag eval, faithfulness, context recall, context precision, answer relevancy, llm-as-judge, retrieval augmented generation eval. Output modes include long-form PDF (see `references/output-rendering.md`), landscape summary one-pager (see `references/landscape-summary-report.md`), multi-page browseable study-guide site with pedagogy appendix (see `references/study-guide-site.md`), and single-file procedural fix/setup guide HTML with remove+reinstall walkthrough (see `references/procedural-guide-site.md`). Triggers for the one-pager include "landscape summary report", "landscape summary", "one-pager", "high-level summary", "executive summary", "decision card", "skim sheet", "at-a-glance reference", "cheat sheet", "TL;DR PDF", "quick reference card", "fridge magnet". Triggers for the study-guide site include "build me a study guide", "exam prep program", "cram program", "certification site", "curriculum site", "weekday cadence", "study program for N days", "memory palace for [exam]", "pedagogy appendix", "spaced repetition program". Triggers for the procedural guide include "fix guide", "how to fix", "walkthrough", "step by step", "setup guide", "install guide", "repair guide", "reassembly steps", "tool organization", "put it back together", "RAG PC setup guide", "Signal setup guide", "procedural guide", "HTML guide". Mergesplit trigger: "incorporate" → run loop on incoming paste, then merge.
+version: 3.12.0
+description: research, investigate, audit, fact-check, lit-review, study guide, incorporate
 ---
 
 # palamedes
@@ -24,7 +24,7 @@ Loop is process. Output is product. Both are auditable artifacts. Reasoning may 
 First output line of any session that triggers this skill:
 
 ```
-palamedes v3.11 engaged · type=<empirical|conceptual|predictive|normative|investigative|comparative|methodological|synthetic> · stakes=<L0|L1|L2|L3|L4> · budget=<tools-allowed>
+palamedes v3.12 engaged · type=<empirical|conceptual|predictive|normative|investigative|comparative|methodological|synthetic|legal|financial> · stakes=<L0|L1|L2|L3|L4> · budget=<tools-allowed>
 ```
 
 Forces commitment to type + stakes routing. The user (and you) can audit the routing. Skip preamble = skill not invoked.
@@ -51,6 +51,16 @@ When user framing and auto-classification disagree, **use higher**. Disclose: "U
 - Pure creative / generative task (story, brainstorm, naming). Loop deforms generativity.
 - User explicitly asks for vibes / quick / no-rigor mode.
 
+## 0.2 Context compaction + constraint survival (L2+)
+
+**Binding constraint:** optimize whether iron laws survive context compaction, not raw instruction count [inferred: tokenopt canon 2026-06-25].
+
+- **Prohibition-type rules** (never fabricate cite, never skip FR gates) are the vulnerable class under summarization/compaction [verified, single-study, directional].
+- **Iron-law prose form:** very short + explicit **OR** full-context in `references/` — **never** medium-length compressed paraphrase (worst adherence regime per CDCT U-curve framing [verified framework]).
+- **Constraint pinning (open impl):** after context compaction or long-session summary, **re-inject §8 iron laws verbatim and the current `RETRIEVAL-ORDER:` header** before the **next `[T*-verified]` tag or P4 emit** (whichever comes first). Cursor/Priompt-native pinning is [unknown] — treat `alwaysApply` as high-priority, not guaranteed under budget pressure.
+- **Mid-session checkpoint:** L3+ sessions past **~16 conversation turns** → same re-injection as constraint pinning (before next `[T*-verified]` tag or P4 emit) [inferred: omission-decay direction, model-specific study].
+- **3-level disclosure:** catalog (description / thin rule) → SKILL body → `references/` lazy-load [verified mechanism]. Output-mode triggers (study guide, procedural HTML, landscape PDF, Pattern 8/9) live in body §5 + `references/` — not in description.
+
 ## 0.1 Question-type routing
 
 | Type | Example | Rigor anchor |
@@ -59,11 +69,13 @@ When user framing and auto-classification disagree, **use higher**. Disclose: "U
 | Conceptual | "what does X mean?" / "is X a Y?" | `references/source-grading.md` + define-then-test |
 | Predictive | "what will X do?" / "how likely?" | `references/confidence-calibration.md` + reference-class |
 | Normative | "should we X?" | values disclosed + alternatives + cost asymmetry |
-| Investigative | "why did X happen?" | flow-of-evidence + counterfactuals (`review-rigor` flow-map) |
+| Investigative | "why did X happen?" | flow-of-evidence + counterfactuals (`review-rigor` flow-map); threat/CVE → `references/threat-intel-evidence-retrieval.md` |
 | Comparative | "X vs. Y" | criteria pre-stated + symmetric scrutiny + `references/bias-catalog.md` (selective skepticism) |
 | Methodological | "how should I research X?" | this skill, recursively, on the meta-question |
 | Methodological (RAG/LLM eval) | "how does Ragas work?" / "RAG eval design" / faithfulness vs recall | `references/rag-eval-literacy.md` + `llm-failure-modes.md` §RAG-judge |
 | Synthetic | "summarize the literature on X" | `references/replication-and-validity.md` + structured-search + per-paper effect-size |
+| Legal / regulatory | statute, case, compliance, contract | `references/legal-evidence-retrieval.md` + citator-style second source (FR-1/FR-2) |
+| Financial / filings | 10-K, earnings, audit evidence | `references/financial-evidence-retrieval.md` + PCAOB AS 1105 ladder [inferred mapping] |
 
 If type unclear → ask once, then commit. Type drives stop conditions.
 
@@ -486,6 +498,9 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 ## 8. Anti-patterns
 
 **Iron laws (absolute, never):**
+
+**Form:** each iron law is one short imperative line here, or full protocol in `references/` — not medium paraphrase (§0.2).
+
 1. Fabricated cite, author + year + title combo not retrieved this session.
 2. `[T*-verified]` tag without retrieval this session OR without row in `REFERENCES.md`.
 3. Convergence-as-truth, N passes agree → high confidence, without independent retrieval.
@@ -518,6 +533,9 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 |---|---|
 | `REFERENCES.md` | every cite (registry of all primary sources used) |
 | `references/source-grading.md` | tier dispute, new domain, source provenance question |
+| `references/legal-evidence-retrieval.md` | statute, case law, regulation, contract, compliance (L2+) |
+| `references/threat-intel-evidence-retrieval.md` | CVE, advisory, incident, IOC, APT (L2+) |
+| `references/financial-evidence-retrieval.md` | SEC filings, earnings, audit evidence (L2+) |
 | `references/replication-and-validity.md` | empirical claim / "study shows X" / effect size / RCT |
 | `references/bias-catalog.md` | every multi-claim report (cognitive + research + LLM bias list) |
 | `references/causal-inference.md` | "X causes Y" / observational data / DAG question |
@@ -541,9 +559,14 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 
 ## 10. Install + sync
 
+**Cursor rule modes (official terms):** Always Apply · Apply to Specific Files (`globs` / `paths`) · Apply Intelligently (`description`) · Apply Manually (`@mention`). Legacy labels ("Auto-Attached," "Agent-Requested") are deprecated in docs.
+
+**Prefix-cache stability:** keep always-on rule/skill prefix bytes stable across edits when possible — cache keys match exact prefix [verified mechanism].
+
 - Cursor global: `~/.cursor/skills/palamedes/`
 - Claude repo: `<repo>/.claude/skills/palamedes/`
-- Cursor: `.cursor/rules/palamedes.mdc` (frontmatter conversion; body points back at canonical)
+- Cursor: `.cursor/rules/palamedes.mdc` (thin pointer; body points at canonical)
+- Optional path-scoped child skills: `paths` frontmatter (Cursor); `.agents/skills/` for cross-platform convergence; Codex ignores `paths`/`globs` [verified platform split].
 - Generic: `AGENTS.md` snippet referencing this dir
 
 **Drift hazard:** mirrors at `~/.cursor/skills/palamedes/SKILL.md`. SoT: this directory; use `sync-dev-skills.sh` from `~/Projects/palamedes/skill` mapping or copy from repo `palamedes/skill/`.
@@ -560,6 +583,8 @@ This skill cannot:
 This skill **expects to be wrong** about ~10–20% of load-bearing claims at L2 stakes, ~5% at L3, target <2% at L4. See `references/failure-log.md` to track and update.
 
 ## 12. Version + changelog
+
+**v3.12.0 (2026-06-25)**, tokenopt + evidence-quality canon (`0624-palamedes-tokenopt`): CSO/description ≤80 chars (routing key only); thin `palamedes.mdc` pointer; §0.2 compaction + constraint-pinning hook + L3+ turn-16 re-injection; iron-law prose form rule; Cursor official rule-mode names; new `references/legal-evidence-retrieval.md`, `threat-intel-evidence-retrieval.md`, `financial-evidence-retrieval.md`; question-type routing rows for legal/financial/threat-intel. Canon: `/Users/dubs/Projects/piranesi.skill/research-projects/0624-palamedes-tokenopt/returns/palamedes_tokenopt_decision_canon_20260625.md`.
 
 **v3.11.0 (2026-06-14)**, Pattern 9 literature corpus fan-out: new `references/literature-corpus-fanout.md` (one sub-agent per paper → critical P3 ingest with AUTH-1 + steelman + falsifier + bias scan → `LITERATURE_INDEX.md` → `SYNTHESIS.md`); `references/authoritative-review-literacy.md` (systematic review vs meta-analysis vs meta-review; snowball limits; routing weight); `references/prompts/literature-paper-ingest.md`; `agentic-research.md` Pattern 9; `synthesizer-agent.md` literature wave graph; P2 routing + description triggers. Worked reference: `/Users/dubs/Projects/piranesi.skill/research/llm-benchmark-routing/literature/`. Triggered by operator directive to incorporate sub-agent index/fan-out for authoritative papers into Palamedes canon.
 

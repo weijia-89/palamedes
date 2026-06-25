@@ -41,6 +41,16 @@ Load when: tier dispute, new domain, source provenance question, primary-vs-seco
 
 Load `authoritative-review-literacy.md` for systematic reviews, meta-analyses, meta-reviews. Iron law: meta-review≠meta-analysis. Corpora ≥3 papers: Pattern 9 (`literature-corpus-fanout.md`).
 
+## Domain retrieval playbooks (lazy-load)
+
+| Domain | File |
+|--------|------|
+| Legal / regulatory | `references/legal-evidence-retrieval.md` |
+| Threat intel / CVE | `references/threat-intel-evidence-retrieval.md` |
+| Financial / SEC | `references/financial-evidence-retrieval.md` |
+
+Clinical / empirical hierarchies: GRADE, OCEBM — use tier table above + `replication-and-validity.md`. T-tag mapping from PCAOB/CISA ladders in domain files is [inferred], not equivalence.
+
 ## Provenance audit checklist
 
 Before citing any source:

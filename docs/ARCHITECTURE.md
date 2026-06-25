@@ -1,6 +1,6 @@
 # Palamedes architecture
 
-Single repo, four user-facing surfaces, one epistemic methodology. Canonical skill body: [`skill/SKILL.md`](../skill/SKILL.md) (**v3.11.0**).
+Single repo, four user-facing surfaces, one epistemic methodology. Canonical skill body: [`skill/SKILL.md`](../skill/SKILL.md) (**v3.12.0**).
 
 ## Surfaces
 

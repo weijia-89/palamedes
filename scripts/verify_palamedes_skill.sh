@@ -10,11 +10,24 @@ RULE="${HOME}/Projects/.cursor/rules/palamedes.mdc"
 test -f "$SKILL"
 test -f skill/references/rag-eval-literacy.md
 test -f skill/references/llm-failure-modes.md
+test -f skill/references/legal-evidence-retrieval.md
+test -f skill/references/threat-intel-evidence-retrieval.md
+test -f skill/references/financial-evidence-retrieval.md
 test -f docs/ARCHITECTURE.md
 test -f CHANGELOG.md
 test -f README.md
 
-grep -q 'version: 3.11.0' "$SKILL"
+grep -q 'version: 3.12.0' "$SKILL"
+grep -q 'description: research, investigate, audit, fact-check, lit-review, study guide, incorporate' "$SKILL"
+python3 -c "
+import pathlib, re
+text = pathlib.Path('skill/SKILL.md').read_text(encoding='utf-8')
+m = re.search(r'^description:\s*(.+)$', text, re.M)
+assert m, 'missing description'
+desc = m.group(1).strip()
+assert len(desc) <= 80, f'description too long: {len(desc)} chars'
+"
+
 test -f skill/references/literature-corpus-fanout.md
 test -f skill/references/authoritative-review-literacy.md
 test -f skill/references/prompts/literature-paper-ingest.md
@@ -22,20 +35,23 @@ grep -q 'Pattern 9' "$SKILL"
 grep -q '4.1 deai gates' "$SKILL"
 grep -q 'FR-1' "$SKILL"
 grep -q 'inferred:first-read-only' "$SKILL"
+grep -q 'Constraint pinning' "$SKILL"
+grep -q '0.2 Context compaction' "$SKILL"
 grep -q '§RAG-judge' skill/references/llm-failure-modes.md
 grep -q 'IF M = answer relevancy' skill/references/rag-eval-literacy.md
 grep -q 'loading.*rag-eval-literacy' "$SKILL" || grep -q 'load.*rag-eval-literacy' "$SKILL"
 
 if [[ -f "$RULE" ]]; then
-  grep -q 'v3.11.0' "$RULE"
-  grep -q 'DEAI-IN' "$RULE"
-  grep -q 'Iron laws' "$RULE"
+  grep -q 'v3.12.0' "$RULE"
+  grep -q 'Canonical:' "$RULE"
+  grep -q 'Do not duplicate' "$RULE"
+  ! grep -q '## Loop, P1' "$RULE"
 fi
 
 grep -q 'DEAI-IN' docs/ARCHITECTURE.md
 grep -q 'DEAI-OUT' docs/ARCHITECTURE.md
-grep -q 'v3.11.0' README.md
-grep -q 'v3.11.0' docs/ARCHITECTURE.md
+grep -q 'v3.12.0' README.md
+grep -q 'v3.12.0' docs/ARCHITECTURE.md
 
 # Cruft must stay removed
 test ! -f study-guide-site.md
