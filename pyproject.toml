@@ -1,0 +1,15 @@
+[project]
+name = "palamedes"
+version = "v3.13.1"
+description = "Pattern-based research and synthesis skill"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+pythonpath = ["."]
+
+[tool.mutmut]
+source_paths = ["scripts/p7_ops.py"]
+also_copy = []
