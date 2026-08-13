@@ -48,7 +48,9 @@ if [[ -f "$RULE" ]]; then
   grep -q 'v3.12.0' "$RULE"
   grep -q 'Canonical:' "$RULE"
   grep -q 'Do not duplicate' "$RULE"
-  ! grep -q '## Loop, P1' "$RULE"
+  if grep -q '## Loop, P1' "$RULE"; then
+    exit 1
+  fi
 fi
 
 grep -q 'DEAI-IN' docs/ARCHITECTURE.md
