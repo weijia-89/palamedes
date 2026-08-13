@@ -18,7 +18,11 @@ def test_l3_behavior_rules_are_present_on_their_declared_surfaces() -> None:
     )
     for phrase in required_skill_phrases:
         assert phrase in SKILL
-    assert "Guardrails (budget, stop conditions, rigor floor) are engine state" in CONTEXT
+    context_flat = " ".join(CONTEXT.split())
+    assert "Guardrails (budget, stop conditions, rigor floor) are engine state" in context_flat
+    assert "The model cannot grant itself more budget" in context_flat
+    assert "lower the rigor floor" in context_flat
+    assert "skip a gate" in context_flat
 
 
 def test_l3_context_keeps_piranesi_as_a_separate_export_only_surface() -> None:
