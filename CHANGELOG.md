@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+_(none)_
+
+## skill v3.13.0 (2026-08-12): L3 prose contract port
+
 - **L3 prose contract port (palamedes surface):** added UP-B02 protocol-conformance repair,
   UP-B03 schema-validate-then-repair, UP-B04 lossless condensation, UP-B05 MECE decomposition
   plus citation markers, UP-B07 context-not-authority, and UP-B08 anti-no-op continuation.
