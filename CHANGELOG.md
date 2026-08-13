@@ -2,7 +2,12 @@
 
 ## [Unreleased]
 
-_(none)_
+- **L3 prose contract port (palamedes surface):** added UP-B02 protocol-conformance repair,
+  UP-B03 schema-validate-then-repair, UP-B04 lossless condensation, UP-B05 MECE decomposition
+  plus citation markers, UP-B07 context-not-authority, and UP-B08 anti-no-op continuation.
+- **L3 context:** added the engine-state axiom (UP-B10) and integration invariants in `context.md`.
+- **Tooling:** aligned project metadata to skill version 3.13.0 and replaced the placeholder
+  Pattern 7 test with deterministic coverage.
 
 ## skill v3.12.0 (2026-06-25): tokenopt + cross-field evidence canon
 

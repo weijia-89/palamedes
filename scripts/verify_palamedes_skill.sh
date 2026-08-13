@@ -6,6 +6,7 @@ cd "$ROOT"
 
 SKILL=skill/SKILL.md
 RULE="${HOME}/Projects/.cursor/rules/palamedes.mdc"
+VERSION=3.13.0
 
 test -f "$SKILL"
 test -f skill/references/rag-eval-literacy.md
@@ -16,8 +17,10 @@ test -f skill/references/financial-evidence-retrieval.md
 test -f docs/ARCHITECTURE.md
 test -f CHANGELOG.md
 test -f README.md
+test -f context.md
 
-grep -q 'version: 3.12.0' "$SKILL"
+grep -q "version: $VERSION" "$SKILL"
+grep -q "version = \"$VERSION\"" pyproject.toml
 grep -q 'description: research, investigate, audit, fact-check, lit-review, study guide, incorporate' "$SKILL"
 python3 -c "
 import pathlib, re
@@ -50,8 +53,10 @@ fi
 
 grep -q 'DEAI-IN' docs/ARCHITECTURE.md
 grep -q 'DEAI-OUT' docs/ARCHITECTURE.md
-grep -q 'v3.12.0' README.md
-grep -q 'v3.12.0' docs/ARCHITECTURE.md
+grep -q "v$VERSION" README.md
+grep -q "v$VERSION" docs/ARCHITECTURE.md
+grep -q 'Guardrails (budget, stop conditions, rigor floor) are engine state' context.md
+grep -q 'finish_empty_nudge' skill/SKILL.md
 
 # Cruft must stay removed
 test ! -f study-guide-site.md

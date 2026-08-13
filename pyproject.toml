@@ -1,6 +1,6 @@
 [project]
 name = "palamedes"
-version = "v3.13.1"
+version = "3.13.0"
 description = "Pattern-based research and synthesis skill"
 requires-python = ">=3.11"
 license = {text = "MIT"}
