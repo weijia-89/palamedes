@@ -130,7 +130,7 @@ def cmd_count_primaries(refs: Path, tiers: set[str]) -> int:
         if not line.startswith("|") or line.startswith("|---"):
             continue
         cells = [c.strip() for c in line.split("|")]
-        if len(cells) < 3 or cells[1] in ("Tag", ""):
+        if len(cells) < 3 or cells[1].lower() in ("tag", "id", ""):
             continue
         n += 1
     print(f"primaries\t{n}")
@@ -156,8 +156,15 @@ def cmd_gate_a(url: str, timeout: int) -> int:
         print(f"gate_a\tbroken-url\t{e}")
         return 1
     get = urllib.request.Request(url, headers={"User-Agent": "palamedes-p7/1.0"})
-    with urllib.request.urlopen(get, timeout=timeout) as resp:
-        body = resp.read(4096).decode("utf-8", errors="replace")
+    try:
+        with urllib.request.urlopen(get, timeout=timeout) as resp:
+            body = resp.read(4096).decode("utf-8", errors="replace")
+    except urllib.error.HTTPError as e:
+        print(f"gate_a\tbroken-url\t{e.code}")
+        return 1
+    except OSError as e:
+        print(f"gate_a\tbroken-url\t{e}")
+        return 1
     block = body[:200].replace("\n", " ")
     print(f"gate_a\tok\t{code}")
     print(f"evidence_block_200\t{block}")
