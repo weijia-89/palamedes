@@ -45,8 +45,8 @@ grep -q 'IF M = answer relevancy' skill/references/rag-eval-literacy.md
 grep -q 'loading.*rag-eval-literacy' "$SKILL" || grep -q 'load.*rag-eval-literacy' "$SKILL"
 
 if [[ -f "$RULE" ]]; then
-  grep -q 'v3.12.0' "$RULE"
-  grep -q 'Canonical:' "$RULE"
+  grep -q "v$VERSION" "$RULE"
+  grep -qE '\*\*(Canon|Canonical):' "$RULE"
   grep -q 'Do not duplicate' "$RULE"
   if grep -q '## Loop, P1' "$RULE"; then
     exit 1
