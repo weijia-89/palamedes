@@ -78,6 +78,7 @@ When user framing and auto-classification disagree, **use higher**. Disclose: "U
 | Synthetic | "summarize the literature on X" | `references/replication-and-validity.md` + structured-search + per-paper effect-size |
 | Legal / regulatory | statute, case, compliance, contract | `references/legal-evidence-retrieval.md` + citator-style second source (FR-1/FR-2) |
 | Financial / filings | 10-K, earnings, audit evidence | `references/financial-evidence-retrieval.md` + PCAOB AS 1105 ladder [inferred mapping] |
+| Scholarly retrieval | "find papers on X", "who cites X", DOI/PMID lookup, open-access status, retraction check | `references/scholarly-api-retrieval.md` (contracts live in the audited bundle) |
 
 If type unclear → ask once, then commit. Type drives stop conditions.
 
@@ -551,6 +552,7 @@ Adapt shape to host (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`). Loop is fixed; s
 | `references/legal-evidence-retrieval.md` | statute, case law, regulation, contract, compliance (L2+) |
 | `references/threat-intel-evidence-retrieval.md` | CVE, advisory, incident, IOC, APT (L2+) |
 | `references/financial-evidence-retrieval.md` | SEC filings, earnings, audit evidence (L2+) |
+| `references/scholarly-api-retrieval.md` | bibliographic retrieval: find papers, DOI/PMID lookup, citation graph, open-access status (contracts live in the audited bundle) |
 | `references/replication-and-validity.md` | empirical claim / "study shows X" / effect size / RCT |
 | `references/bias-catalog.md` | every multi-claim report (cognitive + research + LLM bias list) |
 | `references/causal-inference.md` | "X causes Y" / observational data / DAG question |
@@ -600,6 +602,8 @@ This skill cannot:
 This skill **expects to be wrong** about ~10–20% of load-bearing claims at L2 stakes, ~5% at L3, target <2% at L4. See `references/failure-log.md` to track and update.
 
 ## 12. Version + changelog
+
+**Unreleased (2026-11-02), scholarly retrieval pointer lane:** new `references/scholarly-api-retrieval.md`; routes literal paper-lookup calls to the audited paper-lookup bundle (dry-run first; one bounded live call of at most ten records, recorded in the kit ledger; untrusted-response rules; no endpoint values or limits copied). No version bump yet.
 
 **v3.13.0 (2026-08-12)**, DeepTutor L3 prose-contract port on the palamedes surface: authority-boundary rule (UP-B07), MECE decomposition and citation markers (UP-B05), lossless condensation (UP-B04), anti-no-op continuation (UP-B08), protocol-conformance repair (UP-B02), schema-validate-then-repair (UP-B03), and the engine-state axiom recorded in `context.md` (UP-B10). No runtime dependency or executable surface added.
 
