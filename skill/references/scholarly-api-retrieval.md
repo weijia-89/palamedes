@@ -13,10 +13,11 @@ scripts live in one place only:
 
 This file deliberately copies no endpoint values, parameters, or limits.
 Contracts age: one bundled database retired a web service in 2026-08.
-The bundle carries the version and per-file sha256 hashes in its
-MANIFEST.tsv, and the adoption section of the kit ledger
-(/Users/dubs/Projects/skill-hardening.skill/CLAIMS.md) holds the pin and
-dates; check those before trusting any specific limit or parameter.
+The bundle carries per-file sha256 hashes in its MANIFEST.tsv; the
+version and pin live in the bundle SKILL.md frontmatter and the adoption
+section of the kit ledger
+(/Users/dubs/Projects/skill-hardening.skill/CLAIMS.md). Check those
+before trusting any specific limit or parameter.
 License is MIT (K-Dense, Scientific Agent Skills); the bundle also carries
 its own citation note for material reuse.
 
@@ -50,8 +51,9 @@ before the call.
   do not retry harder.
 - API keys, if any, live in environment variables only and are never
   echoed into reports or here.
-- The Unpaywall route requires a real email parameter; use the operator's
-  dedicated alias mailbox, never a primary address.
+- The Unpaywall route requires a real email parameter; use the alias
+  mailbox the operator designates when the first call is made, never a
+  primary address. The alias value is not stored in any repo.
 - Keep the bundle's scripts non-executable. First sanctioned
   execution, after an operator gate: `paginate.py --dry-run` (it builds
   and prints a URL without fetching), then one bounded live call of at

@@ -2,7 +2,12 @@
 
 ## [Unreleased]
 
-_(none)_
+- **Scholarly retrieval lane (unreleased):** new `references/scholarly-api-retrieval.md` routes
+  literal literature-lookup questions to the audited, pinned paper-lookup bundle in
+  `/Users/dubs/Projects/skill-hardening.skill/adoption/paper-lookup/`. Dry-run first, one
+  bounded live call of at most ten records per session, recorded in the kit ledger
+  (`CLAIMS.md`); responses treated as untrusted third-party data; no endpoint values or
+  limits copied into palamedes. No version bump yet.
 
 ## skill v3.13.0 (2026-08-12): L3 prose contract port
 

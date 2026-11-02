@@ -603,6 +603,8 @@ This skill **expects to be wrong** about ~10–20% of load-bearing claims at L2 
 
 ## 12. Version + changelog
 
+**Unreleased (2026-11-02), scholarly retrieval pointer lane:** new `references/scholarly-api-retrieval.md`; routes literal paper-lookup calls to the audited paper-lookup bundle (dry-run first; one bounded live call of at most ten records, recorded in the kit ledger; untrusted-response rules; no endpoint values or limits copied). No version bump yet.
+
 **v3.13.0 (2026-08-12)**, DeepTutor L3 prose-contract port on the palamedes surface: authority-boundary rule (UP-B07), MECE decomposition and citation markers (UP-B05), lossless condensation (UP-B04), anti-no-op continuation (UP-B08), protocol-conformance repair (UP-B02), schema-validate-then-repair (UP-B03), and the engine-state axiom recorded in `context.md` (UP-B10). No runtime dependency or executable surface added.
 
 **v3.12.0 (2026-06-25)**, tokenopt + evidence-quality canon (`0624-palamedes-tokenopt`): CSO/description ≤80 chars (routing key only); thin `palamedes.mdc` pointer; §0.2 compaction + constraint-pinning hook + L3+ turn-16 re-injection; iron-law prose form rule; Cursor official rule-mode names; new `references/legal-evidence-retrieval.md`, `threat-intel-evidence-retrieval.md`, `financial-evidence-retrieval.md`; question-type routing rows for legal/financial/threat-intel. Canon: `/Users/dubs/Projects/piranesi.skill/research-projects/0624-palamedes-tokenopt/returns/palamedes_tokenopt_decision_canon_20260625.md`.

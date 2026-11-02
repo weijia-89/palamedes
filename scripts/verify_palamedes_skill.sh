@@ -32,6 +32,7 @@ assert len(desc) <= 80, f'description too long: {len(desc)} chars'
 "
 
 test -f skill/references/literature-corpus-fanout.md
+test -f skill/references/scholarly-api-retrieval.md
 test -f skill/references/authoritative-review-literacy.md
 test -f skill/references/prompts/literature-paper-ingest.md
 grep -q 'Pattern 9' "$SKILL"
