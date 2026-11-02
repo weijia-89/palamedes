@@ -13,8 +13,10 @@ scripts live in one place only:
 
 This file deliberately copies no endpoint values, parameters, or limits.
 Contracts age: one bundled database retired a web service in 2026-08.
-The bundle carries the version and source-file hashes in its RECORD.md,
-so check that record before trusting any specific limit or parameter.
+The bundle carries the version and per-file sha256 hashes in its
+MANIFEST.tsv, and the adoption section of the kit ledger
+(/Users/dubs/Projects/skill-hardening.skill/CLAIMS.md) holds the pin and
+dates; check those before trusting any specific limit or parameter.
 License is MIT (K-Dense, Scientific Agent Skills); the bundle also carries
 its own citation note for material reuse.
 
